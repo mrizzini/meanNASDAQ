@@ -1,0 +1,25 @@
+{
+  "name": "meannasdaq",
+  "version": "1.0.0",
+  "description": "MEAN NASDAQ App",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrizzini/meanNASDAQ.git"
+  },
+  "author": "Matt Rizzini",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrizzini/meanNASDAQ/issues"
+  },
+  "homepage": "https://github.com/mrizzini/meanNASDAQ#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongoose": "^5.0.6"
+  }
+}
