@@ -1,12 +1,12 @@
 // express is the web application framework. listens for incoming requests and responds. it can serve static files, compile and deliver HTML, return json data
 
-// require('./api/data/db.js'); uncomment later
+require('./api/data/db.js'); 
 var express = require('express'); // requires express
 var app = express(); // initializes it, so we can use it in our app
 var path = require('path');
 var bodyParser = require('body-parser'); // middleware. parses incoming request bodies in a middleware before your handlers, available under the req.body property.
 
-// var routes = require('./api/routes'); uncomment later
+var routes = require('./api/routes'); 
 
 app.set('port', process.env.PORT); // defines the port to run on
 
@@ -26,9 +26,7 @@ app.use(bodyParser.urlencoded({ extended : false })); // extended to false means
 // enables parsing of posted forms
 app.use(bodyParser.json()); // tells backend it should natively understand json
 
-// app.use('/api', routes); // the / means express will look inside routes file for any route starting with /api
-// uncomment later
-
+app.use('/api', routes); // the / means express will look inside routes file for any route starting with /api
 
 var server = app.listen(app.get('port'), function() { // app.listen returns an object. we can access this by assignging a variable
     var port = server.address().port; // this gets the port number and assigns to port
