@@ -40,8 +40,8 @@ module.exports.stocksGetAll = function (req, res) {
     
     Stock
     .find()
-    .skip(offset) // method to get how many documents to skip
-    .limit(count) // method to get how many doucuments we want to return
+    // .skip(offset) // method to get how many documents to skip
+    // .limit(count) // method to get how many doucuments we want to return
     .exec(function(err, stocks){ // exec is a method to execute query. takes a call back. err and returned data
       if (err) { // if error happens run this
         console.log('Error finding stocks');
@@ -51,27 +51,35 @@ module.exports.stocksGetAll = function (req, res) {
       } else {
         console.log('Found stocks', stocks.length);
         res
-          .json(stocks); // send hotels info to browser
+          .json(stocks); // send stocks info to browser
       }
     });
- 
-  // dont need this with mongoose. this was for the native driver
-  // collection 
-  //   .find() // chaining find method onto collection of hotels
-  //   .skip(offset) // method to get how many documents to skip
-  //   .limit(count) // method to get how many doucuments we want to return
-  //   .toArray(function(err, docs) { // turns into an array, and makes it non-blocking
-  //     console.log('Found hotels', docs); // logs the docs 
-  //     res // and prints to browser
-  //       .status(200)
-  //       .json(docs);
-  // }); 
-  
-  // console.log("db", db);
+};
 
-  // var returnData = hotelData.slice(offset, offset+count); // this takes the hotelData array and slicing it and puts it into a new var
-
-  // res
-  //   .status(200)
-  //   .json( returnData ); // returns all the hotel data in that file
+module.exports.stocksGetOne = function(req, res) {
+    var stockId = req.params.stockId;
+    console.log('GET stockId', stockId);
+    
+    Stock
+    .findById(stockId)
+    .exec(function(err, doc) {
+        var response = {
+            status : 200,
+            message: doc
+        };
+        if (err) {
+            console.log('Error finding stock');
+            response.status = 500;
+            response.message = err;
+        } else if(!doc) {
+            response.status = 404;
+            response.message = {
+                "message" : "Hotel ID not found"
+            };
+        }
+        res
+        .status(response.status)
+        .json( response.message );
+        
+    });
 };

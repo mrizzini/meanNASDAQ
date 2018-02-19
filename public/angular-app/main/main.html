@@ -1,7 +1,11 @@
-<h1>NASDAQ</h1>
+<h1>NASDAQ Stocks</h1>
 
+<h4>Stock Search: <input type="search" ng-model="query.Symbol"></h4>
+
+<!--<div ng-init="stockSearch = search.Symbol">-->
 <ul>
-    <li ng-repeat="stock in vm.stocks">{{ stock.name }}</a></li>
+    <li ng-repeat="stock in vm.stocks | filter: query" ng-show="query">{{ stock.Name }}, {{ stock.Symbol }}</li>
     <!--the ng-href makes each hotel a link. uses _id from the data-->
     <!--this iterates thru the first 5 hotels and prints their name on a list on the browser-->
 </ul>
+<!--</div>-->
