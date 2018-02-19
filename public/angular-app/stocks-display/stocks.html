@@ -1,0 +1,39 @@
+<h1>Here are all the NASDAQ Stocks</h1>
+
+<div>
+<ul ng-controller="StocksController">
+    <li ng-repeat="stock in vm.stocks"><a ng-href="#!/stocks/{{ stock._id }}">{{ stock.Name }}, {{ stock.Symbol }}: {{ stock.Sector }}</li>
+    <!--<li dir-paginate="stock in vm.stocks | itemsPerPage: 50">{{ stock.Name }}, {{ stock.Symbol }}</li>-->
+    <!--<li dir-paginate="stock in vm.stocks | itemsPerPage: 100">{{ stock.Name }}, {{ stock.Symbol }}</li>-->
+    <!--<li dir-paginate="stock in vm.stock | itemsPerPage: vm.stocksPerPage" total-items="vm.totalStocks">{{ stock.Name }}, {{ stock.Symbol }}</li>-->
+    
+    <!--the ng-href makes each hotel a link. uses _id from the data-->
+    <!--this iterates thru the first 5 hotels and prints their name on a list on the browser-->
+</ul>
+<!--<dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>-->
+
+<!--</div>-->
+ <!--<dir-pagination-controls></dir-pagination-controls>-->
+ 
+<!-- <ul>-->
+<!-- <li ng-repeat="stock in vm.stocks | pagination: curPage * pageSize | limitTo: pageSize" >-->
+<!-- <div>{{ stock.Name }}</div> -->
+<!-- </li>-->
+<!--</ul> -->
+
+<!--<div class="pagination-div" ng-show="vm.stocks.length">-->
+<!--<ul>-->
+<!-- <li>-->
+<!--  <button type="button" ng-disabled="curPage == 0"-->
+<!-- ng-click="curPage=curPage-1">PREV</button>-->
+<!-- </li>-->
+<!-- <li>-->
+<!-- <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>-->
+<!-- </li>-->
+<!-- <li>-->
+<!-- <button type="button"-->
+<!-- ng-disabled="curPage >= vm.stocks.length/pageSize - 1"-->
+<!-- ng-click="curPage = curPage+1">NEXT </button>-->
+<!-- </li>-->
+<!--</ul>-->
+<!--</div>-->

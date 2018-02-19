@@ -1,0 +1,26 @@
+<h1>Information on {{ vm.stock.Name }}, ({{ vm.stock.Symbol }})</h1>
+
+<h3><strong>Industry: </strong>{{ vm.stock.Industry }}</h3>
+
+<h3>Last Sale: {{ vm.stock.LastSale }}</h3>
+
+<h3 ng-show="vm.stock.reviews.length > 0">User Comments: </h3>
+<ul>
+    <li ng-repeat="review in vm.stock.reviews">{{ review.name }} says: {{ review.review }}</li>
+</ul>
+<h3>More information can be found here: <a href="https://www.nasdaq.com/symbol/{{vm.stock.Symbol}}">{{vm.stock.Symbol}}</a></h3>
+<br>
+<br>
+<form name="vm.reviewForm" ng-submit="vm.addReview()">
+    Your name: <input type="text" name="name" required ng-minlength="2" ng-model="vm.name">
+    <div ng-show="vm.reviewForm.name.$dirty && vm.reviewForm.name.$invalid && vm.isSubmitted">
+        <p>Name should be more than 2 characters long</p>
+    </div>
+    
+    Your thoughts on the stock: <textarea name="review" required ng-model="vm.review"></textarea>
+    <div ng-show="vm.reviewForm.review.$dirty && vm.isSubmitted">
+        <p>Please add your thoughts</p>
+    </div>
+    
+    <button type="submit" class="btn-primary">Add your comment</button>
+</form>

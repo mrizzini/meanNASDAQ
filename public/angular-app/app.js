@@ -1,6 +1,5 @@
-angular.module('meanNASDAQ', ['ngRoute'])
-.config(config)
-.controller('NASDAQController', NASDAQController);
+angular.module('meanNASDAQ', ['ngRoute']).config(config);
+// .controller('NASDAQController', NASDAQController);
 
 function config($routeProvider) {
     $routeProvider
@@ -8,17 +7,20 @@ function config($routeProvider) {
         templateUrl: 'angular-app/main/main.html',
         controller: NASDAQController,
         controllerAs: 'vm'
+    })
+    .when('/stocks', {
+        templateUrl: 'angular-app/stocks-display/stocks.html',
+        controller: StocksController,
+        controllerAs: 'vm'
+    })
+    .when('/stocks/:id', {
+       templateUrl: 'angular-app/stock-display/stock.html',
+       controller: StockController,
+       controllerAs: 'vm'
     });
 }
 
-function NASDAQController($http) {
-    var vm = this;
-    $http.get('/api/stocks').then(function(response) {
-    console.log(response); 
-    vm.stocks = response.data;
-    
-    });
-}
+
 
 // angular.module('meanNASDAQ', ['ngRoute', 'angular-jwt']).config(config).run(run); // need run when you have the interceptor. gets executed after injector is created
 // // .controller('HotelsController', HotelsController);

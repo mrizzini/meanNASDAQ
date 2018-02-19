@@ -17,6 +17,7 @@ router
 //     .put(ctrlHotels.hotelsUpdateOne) // updates specific hotel. put updates entire document
 //     .delete(ctrlHotels.hotelsDeleteOne); // deletes hotel
 
+//Review routes
 router
     .route('/stocks/:stockId/reviews') // api/stocks
     .get(ctrlReviews.reviewsGetAll) // this maps the controller to the route
