@@ -37,4 +37,5 @@ process.once('SIGUSR2', function(){ // this listens for the SIGUSR event, happen
 
 //bring in schemas and models later
 
-require('./stocks.models.js');
+require('./stock.models.js');
+require('./user.models.js');
