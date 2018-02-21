@@ -1,4 +1,4 @@
-angular.module('meanNASDAQ', ['ngRoute', 'angular-jwt']).config(config).run(run);
+angular.module('meanNASDAQ', ['ngRoute', 'angular-jwt', 'angularUtils.directives.dirPagination']).config(config).run(run);
 // .controller('NASDAQController', NASDAQController);
 
 function config($httpProvider, $routeProvider) { // need Provider b/c we created interceptor
