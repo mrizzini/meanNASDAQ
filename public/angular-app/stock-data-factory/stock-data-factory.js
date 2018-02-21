@@ -5,6 +5,7 @@ function stockDataFactory($http) {
         stockList: stockList,
         stocksDisplay: stocksDisplay,
         stockDisplay: stockDisplay,
+        userDisplay: userDisplay,
         // getResultsPage: getResultsPage
         postReview: postReview
     };
@@ -29,6 +30,10 @@ function stockDataFactory($http) {
     
     function postReview(id, review) {
         return $http.post('/api/stocks/' + id + '/reviews', review).then(complete).catch(failed);
+    }
+    
+    function userDisplay() {
+        return $http.get('/api/users').then(complete).catch(failed);
     }
     
     function complete(response) {

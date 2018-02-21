@@ -1,17 +1,30 @@
 angular.module('meanNASDAQ').controller('StockController', StockController);
 
-function StockController($route, $routeParams, stockDataFactory) {
+function StockController($route, $routeParams, $window, stockDataFactory, AuthFactory, jwtHelper) {
     var vm = this;
     var id = $routeParams.id; // stores id
+    vm.isSubmitted = false;
     // $http.get('/api/stocks').then(function(response) {
     stockDataFactory.stockDisplay(id).then(function(response) {
     console.log(response); 
     vm.stock = response.data;
     });
 
+    vm.isLoggedIn = function() {
+        if (AuthFactory.isLoggedIn) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
     vm.addReview = function() {
+        
+        var token = jwtHelper.decodeToken($window.sessionStorage.token);
+        var username = token.username;
+        
         var postData = {
-            name: vm.name,
+            name: username,
             review: vm.review
         };
         if (vm.reviewForm.$valid) {

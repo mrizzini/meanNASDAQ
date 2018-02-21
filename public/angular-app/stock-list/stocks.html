@@ -2,7 +2,7 @@
 
 <div>
 <ul ng-controller="StocksController">
-    <li ng-repeat="stock in vm.stocks"><a ng-href="#!/stock/{{ stock._id }}">{{ stock.Name }}, {{ stock.Symbol }}: {{ stock.Sector }}</li>
+    <li ng-repeat="stock in vm.stocks"><a ng-href="#!/stock/{{ stock._id }}">{{ stock.Name }} | {{ stock.Symbol }} | {{ stock.Sector }}</li>
     <!--<li dir-paginate="stock in vm.stocks | itemsPerPage: 50">{{ stock.Name }}, {{ stock.Symbol }}</li>-->
     <!--<li dir-paginate="stock in vm.stocks | itemsPerPage: 100">{{ stock.Name }}, {{ stock.Symbol }}</li>-->
     <!--<li dir-paginate="stock in vm.stock | itemsPerPage: vm.stocksPerPage" total-items="vm.totalStocks">{{ stock.Name }}, {{ stock.Symbol }}</li>-->

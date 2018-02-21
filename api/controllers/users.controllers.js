@@ -35,8 +35,9 @@ module.exports.login = function(req, res) {
     User.findOne({
         username: username
     }).exec(function(err, user) {
-        if (err) {
+        if (!user || !password) {
         console.log(err);
+        console.log('wrong user name or password');
         res.status(400).json(err);
         } else {
             if (bcrypt.compareSync(password, user.password)) {
@@ -86,3 +87,26 @@ module.exports.authenticate = function(req, res, next) { // create authenticatio
         res.status(403).json('No token provided'); // if there is no headerExist
     }
 }; // jwt.io to validate tokesn
+
+
+module.exports.usersGetAll = function (req, res) {
+  
+
+    
+    User
+    .find()
+    // .skip(offset) // method to get how many documents to skip
+    // .limit(count) // method to get how many doucuments we want to return
+    .exec(function(err, users){ // exec is a method to execute query. takes a call back. err and returned data
+      if (err) { // if error happens run this
+        console.log('Error finding stocks');
+        res
+          .status(500) // sends 500 status code
+          .json(err); // sends err to browser
+      } else {
+        console.log('Found users', users.length);
+        res
+          .json(users); // send stocks info to browser
+      }
+    });
+};

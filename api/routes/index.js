@@ -21,7 +21,7 @@ router
 router
     .route('/stocks/:stockId/reviews') // api/stocks
     .get(ctrlReviews.reviewsGetAll) // this maps the controller to the route
-    .post(ctrlReviews.reviewsAddOne);
+    .post(ctrlUsers.authenticate, ctrlReviews.reviewsAddOne);
 
 
 router
@@ -39,6 +39,10 @@ router
 router
     .route('/users/login')
     .post(ctrlUsers.login);
+    
+router
+    .route('/users') // api/users
+    .get(ctrlUsers.usersGetAll); // this maps the controller to the route
 
 
 
