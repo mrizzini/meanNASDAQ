@@ -9,8 +9,8 @@ module.exports.stocksGetAll = function (req, res) {
   console.log(req.query);
 
   var offset = 0;
-  var count = 5;
-  var maxCount= 10;
+  var count = 3288;
+  var maxCount= 3288;
   
   if (req.query && req.query.offset) { // checks if query property exists and if offset exists
     offset = parseInt(req.query.offset, 10); // we set offset parameter to a new var. need to turn to a number using parseInt
@@ -40,8 +40,8 @@ module.exports.stocksGetAll = function (req, res) {
     
     Stock
     .find()
-    // .skip(offset) // method to get how many documents to skip
-    // .limit(count) // method to get how many doucuments we want to return
+    .skip(offset) // method to get how many documents to skip
+    .limit(count) // method to get how many doucuments we want to return
     .exec(function(err, stocks){ // exec is a method to execute query. takes a call back. err and returned data
       if (err) { // if error happens run this
         console.log('Error finding stocks');
@@ -74,7 +74,7 @@ module.exports.stocksGetOne = function(req, res) {
         } else if(!doc) {
             response.status = 404;
             response.message = {
-                "message" : "Hotel ID not found"
+                "message" : "Stock ID not found"
             };
         }
         res
@@ -82,4 +82,31 @@ module.exports.stocksGetOne = function(req, res) {
         .json( response.message );
         
     });
+};
+
+
+module.exports.stocksSearchOne = function (req, res) {
+    console.log('GET STOCK BY SYMBOL');
+    // var symbol = req.params.Symbol;
+        var symbol = req.params.symbol;
+        console.log('symbol is ' + symbol);
+    
+    Stock
+    .find({Symbol: symbol})
+    // .skip(offset) // method to get how many documents to skip
+    // .limit(count) // method to get how many doucuments we want to return
+    .exec(function(err, stock){ // exec is a method to execute query. takes a call back. err and returned data
+      if (err) { // if error happens run this
+        console.log('Error finding stocks');
+        res
+          .status(500) // sends 500 status code
+          .json(err); // sends err to browser
+      } else {
+        console.log('Found stock', stock);
+        res
+          .json(stock); // send stocks info to browser
+      }
+    });
+
+  
 };

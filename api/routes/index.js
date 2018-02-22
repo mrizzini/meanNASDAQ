@@ -4,6 +4,7 @@ var router = express.Router();
 var ctrlStocks = require('../controllers/stocks.controllers.js'); // requires controllers file so it has access to functions in that file. 
 var ctrlReviews = require('../controllers/reviews.controllers.js'); // requires controllers file so it has access to functions in that file
 var ctrlUsers = require('../controllers/users.controllers.js'); // requires controllers file so it has access to functions in that file
+var ctrlSearches = require('../controllers/searches.controllers.js'); // requires controllers file so it has access to functions in that file
 
 // // Stock routes 
 router
@@ -16,6 +17,13 @@ router
     .get(ctrlStocks.stocksGetOne);
 //     .put(ctrlHotels.hotelsUpdateOne) // updates specific hotel. put updates entire document
 //     .delete(ctrlHotels.hotelsDeleteOne); // deletes hotel
+
+
+router
+    .route('/stocks/search/:symbol') // api/stocks
+    .get(ctrlStocks.stocksSearchOne) // this maps the controller to the route
+    .post(ctrlSearches.searchesAddOne);
+
 
 //Review routes
 router

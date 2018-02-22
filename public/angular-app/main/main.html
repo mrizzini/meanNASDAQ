@@ -3,15 +3,41 @@
 
 <br>
 <br>
-<div>
-<h2>Search for a specific stock here</h2>
-<h4>Stock Search: <input name="searchBox" type="search" ng-model="query.Symbol"></h4>
+<!--<div>-->
+<!--<h2>Search for a specific stock here</h2>-->
+<!--<h4>Stock Search: <input name="searchBox" type="search" ng-model="query.Symbol"></h4>-->
 
 <!--<div ng-init="stockSearch = search.Symbol">-->
-<ul>
-    <li ng-repeat="stock in vm.stocks | filter: query" ng-show="query">{{ stock.Name }}, {{ stock.Symbol }}</li>
+<!--<ul>-->
+<!--    <li ng-repeat="stock in vm.stocks | filter: query" ng-show="query">{{ stock.Name }}, {{ stock.Symbol }}</li>-->
     <!--the ng-href makes each hotel a link. uses _id from the data-->
     <!--this iterates thru the first 5 hotels and prints their name on a list on the browser-->
-</ul>
+<!--</ul>-->
 <!--</div>-->
+<!--</div>-->
+
+
+<!--<div ng-if="vm.isLoggedIn()">-->
+<form name="searchForm" ng-submit="vm.search()">
+    <!--Your name: <input type="text" name="name" required ng-minlength="2" ng-model="vm.name">-->
+    <!--<div ng-show="vm.reviewForm.name.$dirty && vm.reviewForm.name.$invalid && vm.isSubmitted">-->
+    <!--    <p>Name should be more than 2 characters long</p>-->
+    <!--</div>-->
+    
+    Stock Search: <input name="symbol" id="symbol" type="text" required ng-model="vm.symbol">
+    
+    <button type="submit" class="btn-primary">Search</button>
+</form>
+<!--</div>-->
+
+<div ng-show="vm.isSubmitted">
+<h4>Your search for {{ vm.stock.Symbol }} has yielded: </h4>
+<h3>{{vm.stock.Name}} which last sold at {{ vm.stock.LastSale | currency: "$" : 2 }}</h3>
+
+<h5>Recent searches:</h5>
+
 </div>
+
+<ul>
+   <li ng-repeat="searches in vm.searchHistory">{{searches}}</li>
+</ul>

@@ -8,7 +8,8 @@ function stockDataFactory($http) {
         userDisplay: userDisplay,
         // getResultsPage: getResultsPage
         postReview: postReview,
-        stockPagination: stockPagination
+        stockPagination: stockPagination,
+        searchStock: searchStock
     };
     
     function stockList() {
@@ -39,6 +40,10 @@ function stockDataFactory($http) {
     
     function userDisplay() {
         return $http.get('/api/users').then(complete).catch(failed);
+    }
+    
+    function searchStock(Symbol) {
+        return $http.get('/api/stocks/search/' + Symbol).then(complete).catch(failed);
     }
     
     function complete(response) {

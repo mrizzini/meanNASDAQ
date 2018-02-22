@@ -7,7 +7,8 @@ function config($httpProvider, $routeProvider) { // need Provider b/c we created
     $routeProvider
     .when('/', {
         templateUrl: 'angular-app/main/main.html',
-        controller: NASDAQController,
+        controller: SearchController,
+        // controller: NASDAQController,
         controllerAs: 'vm',
         access: {
             restricted: false
