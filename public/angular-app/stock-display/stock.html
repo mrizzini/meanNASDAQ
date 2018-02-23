@@ -10,7 +10,7 @@
 </ul>
 <h3><em>More information can be found here: </em><a href="https://www.nasdaq.com/symbol/{{vm.stock.Symbol}}" target="_blank">{{vm.stock.Symbol}}</a></h3>
 <br>
-<br>
+
 <div ng-if="vm.isLoggedIn()">
 <form name="vm.reviewForm" ng-submit="vm.addReview()">
     <!--Your name: <input type="text" name="name" required ng-minlength="2" ng-model="vm.name">-->
@@ -25,4 +25,9 @@
     
     <button type="submit" class="btn-primary">Add your comment</button>
 </form>
+<br>
+<div ng-click="vm.addFavorite()">
+    <button type="submit" class="btn-primary">Add this stock to your favorites</button>
+</div>
+
 </div>

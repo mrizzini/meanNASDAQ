@@ -15,13 +15,25 @@ router
 router
     .route('/stocks/:stockId') // stockId is a parameter which will match any thing from /api/stocks/....  the controller can also access this
     .get(ctrlStocks.stocksGetOne);
+    // .post(ctrlUsers.authenticate, ctrlStocks.stocksAddFavorite);
 //     .put(ctrlHotels.hotelsUpdateOne) // updates specific hotel. put updates entire document
 //     .delete(ctrlHotels.hotelsDeleteOne); // deletes hotel
 
 
 router
     .route('/stocks/search/:symbol') // api/stocks
-    .get(ctrlStocks.stocksSearchOne) // this maps the controller to the route
+    .get(ctrlStocks.stocksSearchOne); // this maps the controller to the route
+    // .get(ctrlStocks.searchesGetAll)
+    // .post(ctrlSearches.searchesAddOne);
+    
+
+router
+    .route('/stocks/searches/allSearches')
+    .get(ctrlSearches.searchesGetAll);
+    
+router
+    .route('/stocks/searches/:symbol')
+    // .get(ctrlSearches.searchesGetAll) // this maps the controller to the route
     .post(ctrlSearches.searchesAddOne);
 
 
@@ -50,7 +62,8 @@ router
     
 router
     .route('/users') // api/users
-    .get(ctrlUsers.usersGetAll); // this maps the controller to the route
+    .get(ctrlUsers.usersGetAll) // this maps the controller to the route
+    .post(ctrlUsers.authenticate, ctrlStocks.stocksAddFavorite);
 
 
 

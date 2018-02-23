@@ -2,19 +2,22 @@ angular.module('meanNASDAQ').factory('stockDataFactory', stockDataFactory);
 
 function stockDataFactory($http) {
     return {
-        stockList: stockList,
+        // stockList: stockList,
         stocksDisplay: stocksDisplay,
         stockDisplay: stockDisplay,
         userDisplay: userDisplay,
         // getResultsPage: getResultsPage
         postReview: postReview,
         stockPagination: stockPagination,
-        searchStock: searchStock
+        searchStock: searchStock,
+        postFavorite: postFavorite,
+        searchDisplay: searchDisplay,
+        showSearches: showSearches
     };
     
-    function stockList() {
-        return $http.get('/api/stocks').then(complete).catch(failed);
-    }
+    // function stockList() {
+    //     return $http.get('/api/stocks').then(complete).catch(failed);
+    // }
     
     // function getResultsPage(pageNumber) {
     //      return $http.get('/api/stocks?page=' + pageNumber)
@@ -45,6 +48,19 @@ function stockDataFactory($http) {
     function searchStock(Symbol) {
         return $http.get('/api/stocks/search/' + Symbol).then(complete).catch(failed);
     }
+    
+    function searchDisplay(Symbol) {
+        return $http.post('/api/stocks/searches/' +Symbol).then(complete).catch(failed);
+    }
+    
+    function showSearches() {
+        return $http.get('/api/stocks/searches/allSearches').then(complete).catch(failed);
+    }
+    
+    function postFavorite(id, stock) {
+        return $http.post('/api/users').then(complete).catch(failed);
+    }
+    
     
     function complete(response) {
         return response;

@@ -7,7 +7,7 @@ function StocksController(stockDataFactory, $http) {
     console.log(response); 
     // vm.stocks = response.data;
     
-        vm.stocks = [];
+    vm.stocks = [];
     vm.totalStocks = 0;
     vm.stocksPerPage = 10; // this should match however many results your API puts on one page
     getResultsPage(1);

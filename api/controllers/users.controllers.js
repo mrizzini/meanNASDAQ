@@ -6,6 +6,7 @@ var jwt = require('jsonwebtoken');
 // create register and login function to use as API route
 
 module.exports.register = function(req, res) {
+    console.log(req);
     console.log('registering user');
     
     var username = req.body.username; // contains all properties we can collect from front end. 
@@ -90,8 +91,6 @@ module.exports.authenticate = function(req, res, next) { // create authenticatio
 
 
 module.exports.usersGetAll = function (req, res) {
-  
-
     
     User
     .find()

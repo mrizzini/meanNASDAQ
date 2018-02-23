@@ -16,28 +16,40 @@
 <!--</div>-->
 <!--</div>-->
 
-
+<!--<div ng-controller="SearchController">-->
+    <!--<div ng-controller="SearchDisplayController">-->
 <!--<div ng-if="vm.isLoggedIn()">-->
-<form name="searchForm" ng-submit="vm.search()">
-    <!--Your name: <input type="text" name="name" required ng-minlength="2" ng-model="vm.name">-->
-    <!--<div ng-show="vm.reviewForm.name.$dirty && vm.reviewForm.name.$invalid && vm.isSubmitted">-->
-    <!--    <p>Name should be more than 2 characters long</p>-->
-    <!--</div>-->
-    
-    Stock Search: <input name="symbol" id="symbol" type="text" required ng-model="vm.symbol">
-    
+<form name="symbol" ng-submit="vm.search(); vm.searchDisplay()">
+    <div class="search-group">
+    <label for="symbol">Stock Search: </label>
+    <input id="symbol" type="symbol" required ng-model="vm.symbol">
+    </div>
     <button type="submit" class="btn-primary">Search</button>
 </form>
 <!--</div>-->
 
+
 <div ng-show="vm.isSubmitted">
 <h4>Your search for {{ vm.stock.Symbol }} has yielded: </h4>
 <h3>{{vm.stock.Name}} which last sold at {{ vm.stock.LastSale | currency: "$" : 2 }}</h3>
-
-<h5>Recent searches:</h5>
-
 </div>
 
+<h5>Recent searches:</h5>
+<!--<p>{{vm.stockSearchHistory}}</p>-->
+
 <ul>
-   <li ng-repeat="searches in vm.searchHistory">{{searches}}</li>
+    <li ng-repeat= "searches in vm.allSearches" >{{searches}}</li>
 </ul>
+
+<!--<ul>-->
+<!--   <li ng-repeat="searches in vm.searchHistory">{{searches}}</li>-->
+<!--</ul>-->
+<!--</div>-->
+
+<!--<div ng-controller="SearchDisplayController">-->
+<!--    <p>Test {{vm}}</p>-->
+<!--<ul>-->
+<!--   <li ng-repeat="searchHistory in vm.searchHistory">{{searchHistory}}</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->

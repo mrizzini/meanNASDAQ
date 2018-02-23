@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'); // brings in mongoose to the controller file
 var Stock = mongoose.model('Stock'); // brings in reference to our model. use this inside controllers to interact w/ database
+var User = mongoose.model('User');
 
 
 module.exports.stocksGetAll = function (req, res) {
@@ -106,7 +107,63 @@ module.exports.stocksSearchOne = function (req, res) {
         res
           .json(stock); // send stocks info to browser
       }
-    });
+    }
+    );
 
-  
+};
+
+
+
+var _addFavorite = function(req, res, stock) {
+    User.favorites.push({
+        favorite : req.params.symbol,
+        
+    });
+    
+    User.save(function(err, favoriteStock) {
+        if (err) {
+            res
+            .status(500)
+            .json(err);
+        } else {
+            res
+            .status(201)
+            .json(favoriteStock.favorites[favoriteStock.favories.length - 1]);
+        }
+    });
+};
+
+
+
+
+module.exports.stocksAddFavorite = function (req, res) {
+  var userId = req.params.userId;
+  console.log('GET stockId', userId);
+    
+    User
+    .findById(userId)
+    .select('favorites')
+    .exec(function(err, doc) {
+        var response = {
+            status: 200,
+            message: []
+        };
+        if (err) {
+            console.log('Error finding favorite');
+            response.status = 500;
+            response.message = err;
+        } else if (!doc) {
+            console.log('User id not found in database ' + userId);
+            response.status = 404;
+            response.message = {
+                "message": "User ID not found " + userId
+            };
+        } if (doc) {
+            _addFavorite(req, res, doc);
+        } else {
+            res
+            .status(response.status)
+            .json( response.message );
+        }
+    });
 };

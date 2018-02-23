@@ -1,21 +1,47 @@
 var mongoose = require('mongoose'); // brings in mongoose to the controller file
-// var Search = mongoose.model('Search'); // brings in reference to our model. use this inside controllers to interact w/ database
+var Search = mongoose.model('Searche'); // brings in reference to our model. use this inside controllers to interact w/ database
+var Stock = mongoose.model('Stock'); // brings in reference to our model. use this inside controllers to interact w/ database
+
 
 
 // NEED TO ADD SEARCH MODEL
 
+
+module.exports.searchesGetAll = function(req, res) {
+    console.log('Finding searches');
+  Search
+    .find()
+    // .skip(offset) // method to get how many documents to skip
+    // .limit(count) // method to get how many doucuments we want to return
+    .exec(function(err, searches){ // exec is a method to execute query. takes a call back. err and returned data
+      if (err) { // if error happens run this
+        console.log('Error finding searches');
+        res
+          .status(500) // sends 500 status code
+          .json(err); // sends err to browser
+      } else {
+        console.log('Found searches', searches.length);
+        res
+          .json(searches); // send stocks info to browser
+      }
+    });
+};   
+
+
+
+
+
 module.exports.searchesAddOne = function(req, res) {
-    
+        // console.log(req);
        console.log('new search');
     // var symbol = req.params.Symbol;
-        var search = req.body.search;
+        // var search = req.body.symbol;
+        var search = req.params.symbol;
+        console.log('searched for ', search);
         // console.log('symbol is ' + symbol);
     
-    Search.create({ // creates user in database
-        searches: search,
-        // password: password   // use this to test, then encrypt
-        // pasword: bcrypt.hashSync(password, bcrypt.genSaltSync(10)) // this encrypts password
-// Store hash in your password DB.
+    Search.create({ // creates searc in database
+        search: search,
     }, function (err, search) { // handles error
         if (err) {
             console.log(err);
@@ -28,7 +54,25 @@ module.exports.searchesAddOne = function(req, res) {
 };
     
     
-    
+// module.exports.searchesGetAll = function(req, res) {
+//     console.log('Finding searches');
+//   Search
+//     .find()
+//     // .skip(offset) // method to get how many documents to skip
+//     // .limit(count) // method to get how many doucuments we want to return
+//     .exec(function(err, searches){ // exec is a method to execute query. takes a call back. err and returned data
+//       if (err) { // if error happens run this
+//         console.log('Error finding searches');
+//         res
+//           .status(500) // sends 500 status code
+//           .json(err); // sends err to browser
+//       } else {
+//         console.log('Found searches', searches.length);
+//         res
+//           .json(searches); // send stocks info to browser
+//       }
+//     });
+// };   
     
     
     
