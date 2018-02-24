@@ -21,7 +21,7 @@
 <!--<div ng-if="vm.isLoggedIn()">-->
 <form name="symbol" ng-submit="vm.search(); vm.searchDisplay()">
     <div class="search-group">
-    <label for="symbol">Stock Search: </label>
+    <label for="symbol">Stock Search by symbol: </label>
     <input id="symbol" type="symbol" required ng-model="vm.symbol">
     </div>
     <button type="submit" class="btn-primary">Search</button>
@@ -30,16 +30,26 @@
 
 
 <div ng-show="vm.isSubmitted">
-<h4>Your search for {{ vm.stock.Symbol }} has yielded: </h4>
-<h3>{{vm.stock.Name}} which last sold at {{ vm.stock.LastSale | currency: "$" : 2 }}</h3>
+<div ng-show="vm.correctSearch">
+<h4>Your search for  {{ vm.stock.Symbol }} has yielded: </h4>
+<h3><a ng-href="#!/stock/{{ vm.stock._id }}">{{vm.stock.Name}}</a> which last sold at {{ vm.stock.LastSale | currency: "$" : 2 }}</h3>
 </div>
-
+<div ng-show="vm.error">
+<h4>{{vm.stock}}</h4>
+</div>
 <h5>Recent searches:</h5>
 <!--<p>{{vm.stockSearchHistory}}</p>-->
 
+
 <ul>
-    <li ng-repeat= "searches in vm.allSearches" >{{searches}}</li>
+    <li ng-repeat= "searches in vm.allSearches" >{{searches.search}}</li>
 </ul>
+</div>
+
+
+<!--<p>Search directive is below</p>-->
+
+<!--<search-Directive></search-Directive>-->
 
 <!--<ul>-->
 <!--   <li ng-repeat="searches in vm.searchHistory">{{searches}}</li>-->

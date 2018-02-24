@@ -50,7 +50,7 @@ function stockDataFactory($http) {
     }
     
     function searchDisplay(Symbol) {
-        return $http.post('/api/stocks/searches/' +Symbol).then(complete).catch(failed);
+        return $http.post('/api/stocks/searches/' + Symbol).then(complete).catch(failed);
     }
     
     function showSearches() {
@@ -60,7 +60,6 @@ function stockDataFactory($http) {
     function postFavorite(id, stock) {
         return $http.post('/api/users').then(complete).catch(failed);
     }
-    
     
     function complete(response) {
         return response;

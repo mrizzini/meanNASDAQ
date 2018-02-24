@@ -15,7 +15,7 @@
      <ul class="nav navbar-nav">
          <!--defines navigation items Home, Hotels, Register, Profile-->
        <li ng-class="vm.isActiveTab('')" class="active"><a href="#!/">Home</a></li> <!-- need #! to work -->
-       <li ng-class="vm.isActiveTab('stocks')"><a href="#!/stocks">Stock List</a></li>
+       <li ng-class="vm.isActiveTab('stocks')"><a href="#!/stocks">NASDAQ Stock List</a></li>
        <li ng-class="vm.isActiveTab('register')" ng-if="!vm.isLoggedIn()"><a href="#!/register">Register</a></li>
        <!--if we are NOT logged in, we see Register. if we ARE logged in, we see Profile-->
        <li ng-class="vm.isActiveTab('profile')" ng-if="vm.isLoggedIn()"><a href="#!/profile">Profile</a></li>

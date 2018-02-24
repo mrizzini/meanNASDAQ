@@ -1,39 +1,10 @@
 <h1>Here are all the NASDAQ Stocks</h1>
 
 <div>
-<ol ng-controller="StocksController">
-    <!--<li ng-repeat="stock in vm.stocks"><a ng-href="#!/stock/{{ stock._id }}">{{ stock.Name }} | {{ stock.Symbol }} | {{ stock.Sector }}</li>-->
-    <li dir-paginate="stock in vm.stocks | itemsPerPage: vm.stocksPerPage" total-items='vm.totalStocks' current-page="pagination.current"><a ng-href="#!/stock/{{ stock._id }}">{{ stock.Name }} | {{ stock.Symbol }} | {{ stock.Sector }}</li>
-    <!--<li dir-paginate="stock in vm.stocks | itemsPerPage: 100">{{ stock.Name }}, {{ stock.Symbol }}</li>-->
-    <!--<li dir-paginate="stock in vm.stock | itemsPerPage: vm.stocksPerPage" total-items="vm.totalStocks">{{ stock.Name }}, {{ stock.Symbol }}</li>-->
-    
-    <!--the ng-href makes each hotel a link. uses _id from the data-->
-    <!--this iterates thru the first 5 hotels and prints their name on a list on the browser-->
-</ol>
-<!--<dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>-->
+    <h3>Search for a specific stock: <input name="searchBox" type="search" ng-model="query"></h3>
+<ul>
+    <li dir-paginate="stock in vm.stocks | filter: query | itemsPerPage: 25"><a ng-href="#!/stock/{{ stock._id }}">{{ stock.Name }} | {{ stock.Symbol }} | {{ stock.Sector }}</a></li>
+</ul>
 
-<!--</div>-->
- <dir-pagination-controls on-page-change="vm.pageChanged(newPageNumber)"></dir-pagination-controls>
+<dir-pagination-controls></dir-pagination-controls>
  
-<!-- <ul>-->
-<!-- <li ng-repeat="stock in vm.stocks | pagination: curPage * pageSize | limitTo: pageSize" >-->
-<!-- <div>{{ stock.Name }}</div> -->
-<!-- </li>-->
-<!--</ul> -->
-
-<!--<div class="pagination-div" ng-show="vm.stocks.length">-->
-<!--<ul>-->
-<!-- <li>-->
-<!--  <button type="button" ng-disabled="curPage == 0"-->
-<!-- ng-click="curPage=curPage-1">PREV</button>-->
-<!-- </li>-->
-<!-- <li>-->
-<!-- <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>-->
-<!-- </li>-->
-<!-- <li>-->
-<!-- <button type="button"-->
-<!-- ng-disabled="curPage >= vm.stocks.length/pageSize - 1"-->
-<!-- ng-click="curPage = curPage+1">NEXT </button>-->
-<!-- </li>-->
-<!--</ul>-->
-<!--</div>-->

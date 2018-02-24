@@ -89,21 +89,21 @@ module.exports.stocksGetOne = function(req, res) {
 module.exports.stocksSearchOne = function (req, res) {
     console.log('GET STOCK BY SYMBOL');
     // var symbol = req.params.Symbol;
-        var symbol = req.params.symbol;
-        console.log('symbol is ' + symbol);
+        var symbol = req.params.symbol.toUpperCase();
+        console.log('symbol in stocksSearchOne is ' + symbol);
     
     Stock
     .find({Symbol: symbol})
     // .skip(offset) // method to get how many documents to skip
     // .limit(count) // method to get how many doucuments we want to return
     .exec(function(err, stock){ // exec is a method to execute query. takes a call back. err and returned data
-      if (err) { // if error happens run this
-        console.log('Error finding stocks');
+      if (err || !Array.isArray(stock) || !stock.length) { // if error happens run this
+        console.log('Error finding stock IN stocksSearchOne');
         res
           .status(500) // sends 500 status code
           .json(err); // sends err to browser
       } else {
-        console.log('Found stock', stock);
+        console.log('Found stock in stocksSearchOne', stock);
         res
           .json(stock); // send stocks info to browser
       }

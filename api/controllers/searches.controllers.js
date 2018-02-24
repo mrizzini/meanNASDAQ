@@ -36,7 +36,7 @@ module.exports.searchesAddOne = function(req, res) {
        console.log('new search');
     // var symbol = req.params.Symbol;
         // var search = req.body.symbol;
-        var search = req.params.symbol;
+        var search = req.params.symbol.toUpperCase();
         console.log('searched for ', search);
         // console.log('symbol is ' + symbol);
     
