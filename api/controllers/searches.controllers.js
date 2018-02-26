@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'); // brings in mongoose to the controller file
 var Search = mongoose.model('Searche'); // brings in reference to our model. use this inside controllers to interact w/ database
 var Stock = mongoose.model('Stock'); // brings in reference to our model. use this inside controllers to interact w/ database
+var User = mongoose.model('User');
 
 
 
@@ -32,25 +33,32 @@ module.exports.searchesGetAll = function(req, res) {
 
 
 module.exports.searchesAddOne = function(req, res) {
-        // console.log(req);
-       console.log('new search');
-    // var symbol = req.params.Symbol;
-        // var search = req.body.symbol;
-        var search = req.params.symbol.toUpperCase();
-        console.log('searched for ', search);
-        // console.log('symbol is ' + symbol);
+    //     // console.log(req);
+    //   console.log('new search');
+    // // var symbol = req.params.Symbol;
+    //     // var search = req.body.symbol;
+    //     var search = req.params.symbol.toUpperCase();
+    //     console.log('searched for ', search);
+    //     // console.log('symbol is ' + symbol);
     
-    Search.create({ // creates searc in database
-        search: search,
-    }, function (err, search) { // handles error
-        if (err) {
-            console.log(err);
-            res.status(400).json(err);
-        } else { // if 201 created, we log it and return 201 status with user info
-            console.log('search for', search);
-            res.status(201).json(search);
-        }
-    });
+    // Search.create({ // creates searc in database
+    //     search: search,
+    // }, function (err, search) { // handles error
+    //     if (err) {
+    //         console.log(err);
+    //         res.status(400).json(err);
+    //     } else { // if 201 created, we log it and return 201 status with user info
+    //         console.log('search for', search);
+    //         res.status(201).json(search);
+    //     }
+    // });
+    
+    // User.findOne({
+    //   username: req.params.
+    // })
+    
+    
+    
 };
     
     

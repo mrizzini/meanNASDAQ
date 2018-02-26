@@ -1,6 +1,6 @@
 angular.module('meanNASDAQ').controller('RegisterController', RegisterController);
 
-function RegisterController($http) {
+function RegisterController($http, stockDataFactory) {
     var vm = this;
     
     vm.register = function() {
@@ -15,7 +15,8 @@ function RegisterController($http) {
             if (vm.password !== vm.passwordRepeat) {
                 vm.error = "Please make sure the passwords match.";
             } else {
-                $http.post('/api/users/register', user).then(function(result) {
+                stockDataFactory.register(user).then(function(result) {
+                // $http.post('/api/users/register', user).then(function(result) {
                     console.log(result);
                     vm.message = 'Successful registration, please login';
                 }).catch(function(error) {

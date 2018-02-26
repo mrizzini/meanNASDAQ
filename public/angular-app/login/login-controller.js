@@ -1,6 +1,6 @@
 angular.module('meanNASDAQ').controller('LoginController', LoginController);
 
-function LoginController($http, $location, $window, AuthFactory, jwtHelper) {
+function LoginController($http, $location, $window, AuthFactory, jwtHelper, stockDataFactory) {
     var vm = this;
     
     vm.isLoggedIn = function() {
@@ -18,7 +18,8 @@ function LoginController($http, $location, $window, AuthFactory, jwtHelper) {
                 password: vm.password
             };
             
-        $http.post('/api/users/login', user).then(function(response) {
+            stockDataFactory.login(user).then(function(response){ 
+        // $http.post('/api/users/login', user).then(function(response) {
             if (response.data.success) {
                 $window.sessionStorage.token = response.data.token;
                 AuthFactory.isLoggedIn = true;

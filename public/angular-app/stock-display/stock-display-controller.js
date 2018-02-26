@@ -42,19 +42,19 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
     };
 
 
-    vm.addFavorite = function() {
+    // vm.addFavorite = function() {
         
-        var id = $routeParams.id; // stores id
-        var stock = vm.stock.Symbol;
-        console.log("stock is ", stock);
-        console.log("ID is ", id);
-        console.log('stock added to favoritres');
+    //     var id = $routeParams.id; // stores id
+    //     var stock = vm.stock.Symbol;
+    //     console.log("stock is ", stock);
+    //     console.log("ID is ", id);
+    //     console.log('stock added to favoritres');
         
-        stockDataFactory.postFavorite(id, stock).then(function(response) {
-        console.log(response); 
-        vm.users = response.data;
-        console.log(vm.users);
-    });
-    };
+    //     stockDataFactory.postFavorite(id, stock).then(function(response) {
+    //     console.log(response); 
+    //     vm.users = response.data;
+    //     console.log(vm.users);
+    // });
+    // };
 
 }

@@ -28,6 +28,10 @@ module.exports.register = function(req, res) {
     });
 };
 
+
+
+
+
 module.exports.login = function(req, res) {
     console.log('logging in user');
     var username = req.body.username;
@@ -53,6 +57,68 @@ module.exports.login = function(req, res) {
     
 };
     
+
+var _addUserSearch = function(req, res, user) {
+    user.userSearch.push({
+        search : req.body.symbol
+    });
+    
+    user.save(function(err, userSearchUpdated) {
+        if (err) {
+            res
+            .status(500)
+            .json(err);
+        } else {
+            res
+            .status(201)
+            .json(userSearchUpdated.userSearch[userSearchUpdated.userSearch.length - 1]);
+        }
+    });
+};
+    
+    
+    
+module.exports.usersAddSearch = function(req, res) {
+    console.log("req params is", req.params);
+    var username = req.params.user;
+    
+    User.findOne({
+        username: username
+    })
+    .exec(function(err, doc) {
+        var response = {
+            status: 200,
+            message: []
+        };
+        if (err) {
+            console.log('Error finding user');
+            response.status = 500;
+            response.message = err;
+        } else if (!doc) {
+            console.log('Username not found in database ' + username);
+            response.status = 404;
+            response.message = {
+                "message": "User not found " + username
+            };
+        } if (doc) {
+            _addUserSearch(req, res, doc);
+        } else {
+            res
+            .status(response.status)
+            .json( response.message );
+        }
+    });
+    
+};
+    // .exec(function(err, user) {
+    //     if (err) {
+    //     console.log('usersAddSearch error is ', err);
+    //     res.status(500).json(err);
+    //     } else if (!user)
+    // });
+    
+    
+
 // module.exports.authenticate = function(req, res, next) {
 //         var headerExists = req.headers.authorization;
 //         if (headerExists) {

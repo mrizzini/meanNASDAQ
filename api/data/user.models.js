@@ -1,5 +1,15 @@
 var mongoose = require('mongoose');
 
+var searchSchema = new mongoose.Schema({ // searches are sub-documents. create its own Schema
+    search : {
+    type : String,
+  },
+  createdOn : {
+    type : Date,
+    "default" : Date.now
+  }
+});
+
 var userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -13,6 +23,8 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    userSearch: [searchSchema],
+    
     favorites : {
         type: String
     }

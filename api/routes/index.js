@@ -22,19 +22,19 @@ router
 
 router
     .route('/stocks/search/:symbol') // api/stocks
+    // .route('/api/users/user/:user/searches/:symbol')
     .get(ctrlStocks.stocksSearchOne); // this maps the controller to the route
     // .get(ctrlStocks.searchesGetAll)
     // .post(ctrlSearches.searchesAddOne);
-    
 
-router
-    .route('/stocks/searches/allSearches')
-    .get(ctrlSearches.searchesGetAll);
+// router
+//     .route('/stocks/searches/allSearches')
+//     .get(ctrlSearches.searchesGetAll);
     
-router
-    .route('/stocks/searches/:symbol')
-    // .get(ctrlSearches.searchesGetAll) // this maps the controller to the route
-    .post(ctrlSearches.searchesAddOne);
+// router
+//     .route('/stocks/searches/:symbol')
+//     // .get(ctrlSearches.searchesGetAll) // this maps the controller to the route
+//     .get(ctrlSearches.searchesAddOne);
 
 
 //Review routes
@@ -55,17 +55,22 @@ router
     .route('/users/register')
     .post(ctrlUsers.register);
 
-
 router
     .route('/users/login')
     .post(ctrlUsers.login);
     
 router
     .route('/users') // api/users
-    .get(ctrlUsers.usersGetAll) // this maps the controller to the route
-    .post(ctrlUsers.authenticate, ctrlStocks.stocksAddFavorite);
+    .get(ctrlUsers.usersGetAll); // this maps the controller to the route
+    // .post(ctrlUsers.authenticate, ctrlStocks.stocksAddFavorite);
 
-
+router
+    // .route('/user/:users')
+    // .route('/users/:user')
+    // .route('/users/user/:user/searches')
+    .route('/users/:user/searches')
+    .post(ctrlUsers.usersAddSearch);
+    // .post(ctrlUsers.authenticate, ctrlUsers.usersAddSearch);
 
 
  module.exports = router; //exports router to other files
