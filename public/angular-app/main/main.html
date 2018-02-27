@@ -37,7 +37,7 @@
 <div ng-show="vm.error">
 <h4>{{vm.stock}}</h4>
 </div>
-<h5>Recent searches:</h5>
+</div>
 <!--<p>{{vm.stockSearchHistory}}</p>-->
 
 
@@ -46,11 +46,12 @@
 <!--</ul>-->
 <!--</div>-->
 
-<div>
+
+    <h5>Recent searches:</h5>
     <ul> 
-        <li ng-repeat="searches in vm.userSearch.userSearch">{{searches.search}}</li>
+        <li ng-repeat="searches in vm.userSearch"><a ng-href="https://www.nasdaq.com/symbol/{{ vm.userSearch[$index].search }}" target="_blank">{{searches.search}}</a></li>
     </ul>
-</div>
+
 
 
 <!--<p>Search directive is below</p>-->

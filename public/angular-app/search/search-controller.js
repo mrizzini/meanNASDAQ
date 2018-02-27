@@ -13,6 +13,29 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
         }
     };
     
+    
+    //     if (vm.isLoggedIn()) {
+    //     var token = $window.sessionStorage.token; // capturing token from session storage
+    //     var decodedToken = jwtHelper.decodeToken(token); //decodes token 
+    //     vm.loggedInUser = decodedToken.username; // add logged in user property so we can
+    //     console.log('VM LOGGED IN 2 is ', vm.loggedInUser);
+    //     stockDataFactory.userDisplay(vm.loggedInUser).then(function(response) {
+    //         console.log("userDisplay response.data.userSearch is", response.data.userSearch);
+    //         vm.users = response.data;
+    //         var token = jwtHelper.decodeToken($window.sessionStorage.token);
+    //         vm.username = token.username;
+    //         console.log(vm.username);
+    //         console.log(token);
+    //         vm.userSearch = response.data;
+    //         console.log(vm.userSearch);
+            
+    //     }).catch(function(error) {
+    //         console.log('userDisplay error', error);
+    //     });
+    // }
+    
+    
+    
     // $http.get('/api/stocks').then(function(response) {
     // stockDataFactory.searchStock(symbol).then(function(response) {
     // console.log(response); 
@@ -42,7 +65,7 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
     
     
     vm.search = function() {
-
+    
     var symbol =  vm.symbol.toUpperCase();
     var userSearch = {
         symbol: vm.symbol.toUpperCase()
@@ -102,6 +125,8 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
             console.log(vm.username);
             console.log(token);
             vm.userSearch = response.data;
+            vm.userSearch = response.data.userSearch.slice((response.data.userSearch.length - 5), response.data.userSearch.length);
+
             console.log(vm.userSearch);
             
         }).catch(function(error) {
@@ -112,8 +137,9 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
         
         
         vm.isSubmitted = true;
+        
     };
-    
+       
     
     //     stockDataFactory.showSearches().then(function(response) {
     //     console.log(response.data.length);
