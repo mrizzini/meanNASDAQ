@@ -58,8 +58,8 @@ function stockDataFactory($http) {
     //     return $http.get('/api/stocks/searches/allSearches').then(complete).catch(failed);
     // }
     
-    function userDisplay() {
-        return $http.get('/api/users').then(complete).catch(failed);
+    function userDisplay(user) {
+        return $http.get('/api/users/' + user).then(complete).catch(failed);
     }
     
     function login(user) {

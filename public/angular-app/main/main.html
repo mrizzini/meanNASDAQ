@@ -41,9 +41,15 @@
 <!--<p>{{vm.stockSearchHistory}}</p>-->
 
 
-<ul>
-    <li ng-repeat= "searches in vm.allSearches" >{{searches.search}}</li>
-</ul>
+<!--<ul>-->
+<!--    <li ng-repeat= "searches in vm.allSearches" >{{searches.search}}</li>-->
+<!--</ul>-->
+<!--</div>-->
+
+<div>
+    <ul> 
+        <li ng-repeat="searches in vm.userSearch.userSearch">{{searches.search}}</li>
+    </ul>
 </div>
 
 

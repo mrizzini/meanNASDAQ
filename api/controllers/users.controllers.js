@@ -59,6 +59,7 @@ module.exports.login = function(req, res) {
     
 
 var _addUserSearch = function(req, res, user) {
+    console.log('req body is', req.body);
     user.userSearch.push({
         search : req.body.symbol
     });
@@ -79,7 +80,7 @@ var _addUserSearch = function(req, res, user) {
     
     
 module.exports.usersAddSearch = function(req, res) {
-    console.log("req params is", req.params);
+    console.log("UsersAddSearch req params is", req.params.user);
     var username = req.params.user;
     
     User.findOne({
@@ -95,7 +96,7 @@ module.exports.usersAddSearch = function(req, res) {
             response.status = 500;
             response.message = err;
         } else if (!doc) {
-            console.log('Username not found in database ' + username);
+            console.log('UsersAddSearch Username not found in database ' + username);
             response.status = 404;
             response.message = {
                 "message": "User not found " + username
@@ -157,21 +158,56 @@ module.exports.authenticate = function(req, res, next) { // create authenticatio
 
 
 module.exports.usersGetAll = function (req, res) {
-    
-    User
-    .find()
-    // .skip(offset) // method to get how many documents to skip
-    // .limit(count) // method to get how many doucuments we want to return
-    .exec(function(err, users){ // exec is a method to execute query. takes a call back. err and returned data
-      if (err) { // if error happens run this
-        console.log('Error finding stocks');
-        res
-          .status(500) // sends 500 status code
-          .json(err); // sends err to browser
-      } else {
-        console.log('Found users', users.length);
-        res
-          .json(users); // send stocks info to browser
-      }
+    var username = req.params.user;
+    console.log('USERS GET ALL username is', req.params);
+    User.findOne({
+        username: username
+    })
+    .exec(function(err, doc) {
+        var response = {
+            status: 200,
+            message: []
+        };
+        if (err) {
+            console.log('Error finding user');
+            response.status = 500;
+            response.message = err;
+        } else if (!doc) {
+            console.log('UsersGetAll Username not found in database ' + username);
+            response.status = 404;
+            response.message = {
+                "message": "User not found " + username
+            };
+        } else {
+            response.message = doc;
+            if(!response.message) {
+                response.status = 404;
+                response.message = {
+                    "message" : "not found" 
+                };
+            }
+            
+        }
+            res
+            .status(response.status)
+            .json( response.message );
+        
     });
+    
+    // User
+    // .find()
+    // // .skip(offset) // method to get how many documents to skip
+    // // .limit(count) // method to get how many doucuments we want to return
+    // .exec(function(err, users){ // exec is a method to execute query. takes a call back. err and returned data
+    //   if (err) { // if error happens run this
+    //     console.log('Error finding stocks');
+    //     res
+    //       .status(500) // sends 500 status code
+    //       .json(err); // sends err to browser
+    //   } else {
+    //     console.log('Found users', users.length);
+    //     res
+    //       .json(users); // send stocks info to browser
+    //   }
+    // });
 };

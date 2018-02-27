@@ -60,7 +60,7 @@ router
     .post(ctrlUsers.login);
     
 router
-    .route('/users') // api/users
+    .route('/users/:user') // api/users
     .get(ctrlUsers.usersGetAll); // this maps the controller to the route
     // .post(ctrlUsers.authenticate, ctrlStocks.stocksAddFavorite);
 
@@ -70,6 +70,7 @@ router
     // .route('/users/user/:user/searches')
     .route('/users/:user/searches')
     .post(ctrlUsers.usersAddSearch);
+    // .get(ctrlUsers.');
     // .post(ctrlUsers.authenticate, ctrlUsers.usersAddSearch);
 
 
