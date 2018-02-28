@@ -18,8 +18,7 @@ function LoginController($http, $location, $window, AuthFactory, jwtHelper, stoc
                 password: vm.password
             };
             
-            stockDataFactory.login(user).then(function(response){ 
-        // $http.post('/api/users/login', user).then(function(response) {
+            stockDataFactory.login(user).then(function(response){    
             if (response.data.success) {
                 $window.sessionStorage.token = response.data.token;
                 AuthFactory.isLoggedIn = true;
@@ -30,9 +29,8 @@ function LoginController($http, $location, $window, AuthFactory, jwtHelper, stoc
             }
         }).catch(function(error) {
             alert('Wrong password and username combination');
-           console.log(error); 
+            console.log(error); 
         });
-            
         }
     };
     
@@ -42,11 +40,9 @@ function LoginController($http, $location, $window, AuthFactory, jwtHelper, stoc
         $location.path('/');
     };
     
-    
     vm.isActiveTab = function(url) {
         var currentPath = $location.path().split('/')[1];
         return (url === currentPath ? 'active' : '');
     };
-    
-    
-}
+
+} // ends LoginController

@@ -16,7 +16,6 @@ function RegisterController($http, stockDataFactory) {
                 vm.error = "Please make sure the passwords match.";
             } else {
                 stockDataFactory.register(user).then(function(result) {
-                // $http.post('/api/users/register', user).then(function(result) {
                     console.log(result);
                     vm.message = 'Successful registration, please login';
                 }).catch(function(error) {
@@ -25,4 +24,5 @@ function RegisterController($http, stockDataFactory) {
             }
         }
     };
-}
+    
+} // ends RegisterController

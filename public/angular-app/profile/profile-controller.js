@@ -8,13 +8,8 @@ function ProfileController($route, $routeParams, $window, stockDataFactory, Auth
     stockDataFactory.userDisplay(vm.loggedInUser).then(function(response) {
     console.log("userDisplay response is", response); 
     vm.favorites = response.data.userFavorites;
-    // vm.users = response.data;
-    // var token = jwtHelper.decodeToken($window.sessionStorage.token);
-    // vm.username = token.username;
     });
     
-    // var token = jwtHelper.decodeToken($window.sessionStorage.token);
-    // vm.username = token.username;
 }
 
 

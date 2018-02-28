@@ -13,21 +13,14 @@
 
 <div ng-if="vm.isLoggedIn()">
 <form name="vm.reviewForm" ng-submit="vm.addReview()">
-    <!--Your name: <input type="text" name="name" required ng-minlength="2" ng-model="vm.name">-->
-    <!--<div ng-show="vm.reviewForm.name.$dirty && vm.reviewForm.name.$invalid && vm.isSubmitted">-->
-    <!--    <p>Name should be more than 2 characters long</p>-->
-    <!--</div>-->
-    
     Your thoughts on the stock: <textarea name="review" required ng-model="vm.review"></textarea>
     <div ng-show="vm.reviewForm.review.$dirty && vm.isSubmitted">
         <p>Please add your thoughts</p>
     </div>
-    
     <button type="submit" class="btn-primary">Add your comment</button>
 </form>
 <br>
 <div ng-show="!vm.stockFavorited" ng-click="vm.addFavorite()">
     <button type="submit" class="btn-primary">Add this stock to your favorites</button>
 </div>
-
 </div>

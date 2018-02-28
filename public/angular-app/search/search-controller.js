@@ -12,18 +12,14 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
     };
     
     vm.search = function() {
-    
     var symbol =  vm.symbol.toUpperCase();
     var userSearch = {
         symbol: vm.symbol.toUpperCase()
     };
     var user = vm.username;
     console.log('search button clicked and symbol is ', symbol + ' user is ', user);
-    // vm.isSubmitted = true;
 
     stockDataFactory.searchStock(symbol).then(function(response) {
-        // console.log('response is ', response.data.length);
-        // vm.isSubmitted = true;
         if (!response) {
             vm.error = true;
             vm.correctSearch = false;
@@ -32,10 +28,8 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
             vm.correctSearch = true;
             vm.error = false;
             vm.stock = response.data[0];
-            // vm.isSubmitted = true;
             console.log('vm.stock is', vm.stock);
         }
-
     });
     
     if (vm.isLoggedIn()) {
@@ -52,7 +46,6 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
     
     console.log('VM.LOGGED IN', vm.loggedInUser);
                     
-                    
     if (vm.isLoggedIn()) {
         var token = $window.sessionStorage.token; // capturing token from session storage
         var decodedToken = jwtHelper.decodeToken(token); //decodes token 
@@ -67,17 +60,12 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
             console.log(token);
             vm.userSearch = response.data;
             vm.userSearch = response.data.userSearch.slice((response.data.userSearch.length - 5), response.data.userSearch.length);
-
             console.log(vm.userSearch);
-            
         }).catch(function(error) {
             console.log('userDisplay error', error);
         });
     }
-  
-        vm.isSubmitted = true;
-        
-    };
-       
-    
-}
+    vm.isSubmitted = true;
+    }; // Ends vm.search()
+
+} // Ends SearchController 

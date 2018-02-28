@@ -4,15 +4,14 @@ function stockDataFactory($http) {
     return {
         stocksDisplay: stocksDisplay,
         stockDisplay: stockDisplay,
-        userDisplay: userDisplay,
         postReview: postReview,
         searchStock: searchStock,
+        userDisplay: userDisplay,
         addUserSearch: addUserSearch,
+        addUserFavorite: addUserFavorite,
         login: login,
-        register: register,
-        addUserFavorite: addUserFavorite
+        register: register
     };
-    
     
     function stocksDisplay() {
         return $http.get('/api/stocks').then(complete).catch(failed);
@@ -35,20 +34,20 @@ function stockDataFactory($http) {
         return $http.get('/api/users/' + user).then(complete).catch(failed);
     }
     
+    function addUserSearch(user, Symbol) {
+        return $http.post('/api/users/' + user + '/searches', Symbol).then(complete).catch(failed);
+    }
+
+    function addUserFavorite(user, stock) {
+        return $http.post('/api/users/' + user + '/favorites', stock).then(complete).catch(failed);
+    }
+    
     function login(user) {
         return $http.post('/api/users/login', user).then(complete).catch(failed);
     }
     
     function register(user) {
         return $http.post('/api/users/register', user).then(complete).catch(failed);
-    }
-    
-    function addUserSearch(user, Symbol) {
-        return $http.post('/api/users/' + user + '/searches', Symbol).then(complete).catch(failed);
-    }
-    
-    function addUserFavorite(user, stock) {
-        return $http.post('/api/users/' + user + '/favorites', stock).then(complete).catch(failed);
     }
     
     function complete(response) {

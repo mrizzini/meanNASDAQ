@@ -8,11 +8,9 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
     stockDataFactory.stockDisplay(id).then(function(response) {
     console.log(response); 
     vm.stock = response.data;
-    
     vm.symbol = {
         symbol : vm.stock.Symbol
     };
-    
     });
 
     vm.isLoggedIn = function() {
@@ -23,16 +21,14 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         }
     };
 
-
     vm.addReview = function() {
-        
         var token = jwtHelper.decodeToken($window.sessionStorage.token);
         var username = token.username;
-        
         var postData = {
             name: username,
             review: vm.review
         };
+        
         if (vm.reviewForm.$valid) {
             stockDataFactory.postReview(id, postData).then(function(response) {
                 if (response.status === 201) { // not 200 like in udemy video
@@ -45,7 +41,6 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
             vm.isSubmitted = true;
         }
     };
-
 
     vm.addFavorite = function() {
         var token = $window.sessionStorage.token; // capturing token from session storage
@@ -60,19 +55,5 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
             console.log(error);
         });
     };
-  
     
 } // ends Stock Controller
-
-
-    //     var id = $routeParams.id; // stores id
-    //     var stock = vm.stock.Symbol;
-    //     console.log("stock is ", stock);
-    //     console.log("ID is ", id);
-    //     console.log('stock added to favoritres');
-        
-    //     stockDataFactory.postFavorite(id, stock).then(function(response) {
-    //     console.log(response); 
-    //     vm.users = response.data;
-    //     console.log(vm.users);
-    // });
