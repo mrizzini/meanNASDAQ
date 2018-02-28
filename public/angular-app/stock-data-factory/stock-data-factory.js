@@ -9,6 +9,7 @@ function stockDataFactory($http) {
         userDisplay: userDisplay,
         addUserSearch: addUserSearch,
         addUserFavorite: addUserFavorite,
+        deleteProfile: deleteProfile,
         login: login,
         register: register
     };
@@ -40,6 +41,10 @@ function stockDataFactory($http) {
 
     function addUserFavorite(user, stock) {
         return $http.post('/api/users/' + user + '/favorites', stock).then(complete).catch(failed);
+    }
+    
+    function deleteProfile(user) {
+        return $http.delete('/api/users/' + user).then(complete).catch(failed);
     }
     
     function login(user) {

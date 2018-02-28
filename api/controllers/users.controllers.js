@@ -220,3 +220,23 @@ module.exports.usersAddFavorite = function(req, res) {
 };
 
 
+module.exports.deleteUser = function(req, res) {
+    var user = req.params.user;
+    console.log("deleted user is ", user);
+    
+    User
+    .remove({ username: user })
+    .exec(function(err, user) {
+        if (err) {
+            res
+            .status(404)
+            .json(err);
+        } else {
+            console.log('User deleted from database', user);
+            res
+            .status(204)
+            .json();
+        }
+    });
+};
+

@@ -39,7 +39,8 @@ router
     
 router
     .route('/users/:user') // api/users
-    .get(ctrlUsers.usersGetAll); // this maps the controller to the route
+    .get(ctrlUsers.usersGetAll) // this maps the controller to the route
+    .delete(ctrlUsers.deleteUser);
     // .post(ctrlUsers.authenticate, ctrlStocks.stocksAddFavorite);
 
 router
