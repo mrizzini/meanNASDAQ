@@ -10,6 +10,12 @@ var searchSchema = new mongoose.Schema({ // searches are sub-documents. create i
   }
 });
 
+var favoritesSchema = new mongoose.Schema({ // searches are sub-documents. create its own Schema
+    favorites : {
+    type : String,
+  }
+});
+
 var userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -25,9 +31,7 @@ var userSchema = new mongoose.Schema({
     },
     userSearch: [searchSchema],
     
-    favorites : {
-        type: String
-    }
+    userFavorites : [favoritesSchema]
 });
 
 mongoose.model('User', userSchema);

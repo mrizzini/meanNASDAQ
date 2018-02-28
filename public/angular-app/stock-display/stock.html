@@ -26,7 +26,7 @@
     <button type="submit" class="btn-primary">Add your comment</button>
 </form>
 <br>
-<div ng-click="vm.addFavorite()">
+<div ng-show="!vm.stockFavorited" ng-click="vm.addFavorite()">
     <button type="submit" class="btn-primary">Add this stock to your favorites</button>
 </div>
 

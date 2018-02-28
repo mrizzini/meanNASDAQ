@@ -1,4 +1,8 @@
 <h1>{{vm.loggedInUser}}'s Profile</h1>
 
+<h2>{{vm.loggedInUser}}'s Favorite NASDAQ Stocks:</h2>
 
+<ul>
+    <li ng-repeat="favorites in vm.favorites">{{favorites.favorites}}</li>
+</ul>
 <!--need to add favorites-->

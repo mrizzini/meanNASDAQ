@@ -29,9 +29,6 @@ module.exports.register = function(req, res) {
 };
 
 
-
-
-
 module.exports.login = function(req, res) {
     console.log('logging in user');
     var username = req.body.username;
@@ -54,10 +51,9 @@ module.exports.login = function(req, res) {
             }
         }
     });
-    
 };
     
-
+    
 var _addUserSearch = function(req, res, user) {
     console.log('req body is', req.body);
     user.userSearch.push({
@@ -76,7 +72,6 @@ var _addUserSearch = function(req, res, user) {
         }
     });
 };
-    
     
     
 module.exports.usersAddSearch = function(req, res) {
@@ -111,32 +106,7 @@ module.exports.usersAddSearch = function(req, res) {
     });
     
 };
-    // .exec(function(err, user) {
-    //     if (err) {
-    //     console.log('usersAddSearch error is ', err);
-    //     res.status(500).json(err);
-    //     } else if (!user)
-    // });
-    
-    
 
-// module.exports.authenticate = function(req, res, next) {
-//         var headerExists = req.headers.authorization;
-//         if (headerExists) {
-//             var token = req.headers.authorization.split(' ')[1];
-//             jwt.verify(token, 's3cr3t', function(error, decoded) {
-//                 if (error) {
-//                     console.log(error);
-//                     res.status(401).json('Unauthorized!!');
-//                 } else {
-//                     req.user = decoded.username;
-//                     next();
-//                 }
-//             });
-//         } else {
-//             res.status(403).json('No token provided');
-//         }
-//     };
 
 module.exports.authenticate = function(req, res, next) { // create authentication function. next is a middleware. function that has access to req & res and can make changes and end cycle
     var headerExists = req.headers.authorization; // checks if req object has an authorization header
@@ -186,28 +156,67 @@ module.exports.usersGetAll = function (req, res) {
                     "message" : "not found" 
                 };
             }
-            
         }
             res
             .status(response.status)
             .json( response.message );
-        
+    });
+};
+
+
+var _addUserFavorite = function(req, res, user) {
+    console.log('req body is', req.body);
+    user.userFavorites.push({
+        favorites : req.body.symbol
     });
     
-    // User
-    // .find()
-    // // .skip(offset) // method to get how many documents to skip
-    // // .limit(count) // method to get how many doucuments we want to return
-    // .exec(function(err, users){ // exec is a method to execute query. takes a call back. err and returned data
-    //   if (err) { // if error happens run this
-    //     console.log('Error finding stocks');
-    //     res
-    //       .status(500) // sends 500 status code
-    //       .json(err); // sends err to browser
-    //   } else {
-    //     console.log('Found users', users.length);
-    //     res
-    //       .json(users); // send stocks info to browser
-    //   }
-    // });
+    user.save(function(err, userFavoritesUpdated) {
+        if (err) {
+            res
+            .status(500)
+            .json(err);
+        } else {
+            res
+            .status(201)
+            .json(userFavoritesUpdated.userFavorites[userFavoritesUpdated.userFavorites.length - 1]);
+        }
+    });
 };
+
+
+module.exports.usersAddFavorite = function(req, res) {
+    var username = req.params.user;
+    var symbol = req.body.symbol;
+    console.log('usersAddFavorite user is', username);
+    console.log('usersAddFavorite symbol is', req.body.symbol);
+    
+    User.findOne({
+        username: username
+    })
+    .exec(function(err, doc) {
+        var response = {
+            status: 200,
+            message: []
+        };
+        if (err) {
+            console.log('Error finding user');
+            response.status = 500;
+            response.message = err;
+        } else if (!doc) {
+            console.log('usersAddFavorite Username not found in database ' + username);
+            response.status = 404;
+            response.message = {
+                "message": "User not found " + username
+            };
+        } if (doc) {
+            _addUserFavorite(req, res, doc);
+        } else {
+            res
+            .status(response.status)
+            .json( response.message );
+        }
+    });
+    
+};
+
+

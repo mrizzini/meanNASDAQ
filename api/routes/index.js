@@ -4,38 +4,19 @@ var router = express.Router();
 var ctrlStocks = require('../controllers/stocks.controllers.js'); // requires controllers file so it has access to functions in that file. 
 var ctrlReviews = require('../controllers/reviews.controllers.js'); // requires controllers file so it has access to functions in that file
 var ctrlUsers = require('../controllers/users.controllers.js'); // requires controllers file so it has access to functions in that file
-var ctrlSearches = require('../controllers/searches.controllers.js'); // requires controllers file so it has access to functions in that file
 
 // // Stock routes 
 router
     .route('/stocks') // api/stocks
     .get(ctrlStocks.stocksGetAll); // this maps the controller to the route
 
-
 router
     .route('/stocks/:stockId') // stockId is a parameter which will match any thing from /api/stocks/....  the controller can also access this
     .get(ctrlStocks.stocksGetOne);
-    // .post(ctrlUsers.authenticate, ctrlStocks.stocksAddFavorite);
-//     .put(ctrlHotels.hotelsUpdateOne) // updates specific hotel. put updates entire document
-//     .delete(ctrlHotels.hotelsDeleteOne); // deletes hotel
-
 
 router
     .route('/stocks/search/:symbol') // api/stocks
-    // .route('/api/users/user/:user/searches/:symbol')
     .get(ctrlStocks.stocksSearchOne); // this maps the controller to the route
-    // .get(ctrlStocks.searchesGetAll)
-    // .post(ctrlSearches.searchesAddOne);
-
-// router
-//     .route('/stocks/searches/allSearches')
-//     .get(ctrlSearches.searchesGetAll);
-    
-// router
-//     .route('/stocks/searches/:symbol')
-//     // .get(ctrlSearches.searchesGetAll) // this maps the controller to the route
-//     .get(ctrlSearches.searchesAddOne);
-
 
 //Review routes
 router
@@ -43,12 +24,9 @@ router
     .get(ctrlReviews.reviewsGetAll) // this maps the controller to the route
     .post(ctrlUsers.authenticate, ctrlReviews.reviewsAddOne);
 
-
 router
     .route('/stocks/:stockId/reviews/:reviewId') // stockId is a parameter which will match any thing from /api/stocks/....  the controller can also access this
     .get(ctrlReviews.reviewsGetOne);
-//     .put(ctrlHotels.hotelsUpdateOne) // updates specific hotel. put updates entire document
-//     .delete(ctrlHotels.hotelsDeleteOne); // deletes hotel
 
 // Authenication routes
 router
@@ -65,14 +43,12 @@ router
     // .post(ctrlUsers.authenticate, ctrlStocks.stocksAddFavorite);
 
 router
-    // .route('/user/:users')
-    // .route('/users/:user')
-    // .route('/users/user/:user/searches')
     .route('/users/:user/searches')
     .post(ctrlUsers.usersAddSearch);
-    // .get(ctrlUsers.');
-    // .post(ctrlUsers.authenticate, ctrlUsers.usersAddSearch);
-
+    
+router
+    .route('/users/:user/favorites')
+    .post(ctrlUsers.usersAddFavorite);
 
  module.exports = router; //exports router to other files
 

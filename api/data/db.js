@@ -39,4 +39,3 @@ process.once('SIGUSR2', function(){ // this listens for the SIGUSR event, happen
 
 require('./stock.models.js');
 require('./user.models.js');
-require('./search.models.js');

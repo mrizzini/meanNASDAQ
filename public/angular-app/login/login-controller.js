@@ -29,6 +29,7 @@ function LoginController($http, $location, $window, AuthFactory, jwtHelper, stoc
                 // need to add jwtHelper as dependency to app.js
             }
         }).catch(function(error) {
+            alert('Wrong password and username combination');
            console.log(error); 
         });
             

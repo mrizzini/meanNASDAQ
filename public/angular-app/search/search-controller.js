@@ -2,8 +2,6 @@ angular.module('meanNASDAQ').controller('SearchController', SearchController);
 
 function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHelper) {
     var vm = this;
-    // vm.isSubmitted = false;
-    // vm.searchHistory = [];
     
     vm.isLoggedIn = function() {
         if (AuthFactory.isLoggedIn) {
@@ -12,57 +10,6 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
             return false;
         }
     };
-    
-    
-    //     if (vm.isLoggedIn()) {
-    //     var token = $window.sessionStorage.token; // capturing token from session storage
-    //     var decodedToken = jwtHelper.decodeToken(token); //decodes token 
-    //     vm.loggedInUser = decodedToken.username; // add logged in user property so we can
-    //     console.log('VM LOGGED IN 2 is ', vm.loggedInUser);
-    //     stockDataFactory.userDisplay(vm.loggedInUser).then(function(response) {
-    //         console.log("userDisplay response.data.userSearch is", response.data.userSearch);
-    //         vm.users = response.data;
-    //         var token = jwtHelper.decodeToken($window.sessionStorage.token);
-    //         vm.username = token.username;
-    //         console.log(vm.username);
-    //         console.log(token);
-    //         vm.userSearch = response.data;
-    //         console.log(vm.userSearch);
-            
-    //     }).catch(function(error) {
-    //         console.log('userDisplay error', error);
-    //     });
-    // }
-    
-    
-    
-    // $http.get('/api/stocks').then(function(response) {
-    // stockDataFactory.searchStock(symbol).then(function(response) {
-    // console.log(response); 
-    // vm.stocks = response.data;
-    
-    
-    // vm.searchDisplay = function() {
-        
-    // console.log('search button clicked FOR DISPLAY');
-    // var symbol = vm.symbol;
-
-    // stockDataFactory.searchDisplay(symbol).then(function(response) {
-    //     console.log('search Display', symbol);
-    //     console.log('response.data is', response.data);
-    //     console.log('response is ', response.data.search);
-    //     vm.stockSearchHistory = response.data.search;
-    //     // $route.reload(); 
-    //     // vm.isSubmitted = true;
-    //      // vm.searchHistory.push(response.data[0].Symbol);
-    //     // if (vm.searchHistory.length > 3) {
-    //     //  vm.searchHistory.shift();   
-    //     // }
-    // }
-    // );
-    
-    //     };
-    
     
     vm.search = function() {
     
@@ -88,13 +35,7 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
             // vm.isSubmitted = true;
             console.log('vm.stock is', vm.stock);
         }
-        // vm.stock = response.data[0];
-        // vm.isSubmitted = true;
-        // console.log('vm.stock is', vm.stock);
-        // vm.searchHistory.push(response.data[0].Symbol);
-        // if (vm.searchHistory.length > 3) {
-        //  vm.searchHistory.shift();   
-        // }
+
     });
     
     if (vm.isLoggedIn()) {
@@ -134,25 +75,9 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
         });
     }
   
-        
-        
         vm.isSubmitted = true;
         
     };
        
-    
-    //     stockDataFactory.showSearches().then(function(response) {
-    //     console.log(response.data.length);
-    //     // $route.reload(); 
-    //     // if (response.data.length >= 10) {
-    //     //     response.data.shift();
-    //     //     console.log('when shift, response.data.length is', response.data.length);
-    //     // }
-    //     vm.allSearches = response.data.slice((response.data.length - 5), response.data.length);
-    //     // if (vm.allSearches.length > 10) {
-    //     //     vm.allSearches.pop();
-    //     // }
-    // });
-    
     
 }

@@ -8,6 +8,11 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
     stockDataFactory.stockDisplay(id).then(function(response) {
     console.log(response); 
     vm.stock = response.data;
+    
+    vm.symbol = {
+        symbol : vm.stock.Symbol
+    };
+    
     });
 
     vm.isLoggedIn = function() {
@@ -42,8 +47,24 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
     };
 
 
-    // vm.addFavorite = function() {
-        
+    vm.addFavorite = function() {
+        var token = $window.sessionStorage.token; // capturing token from session storage
+        var decodedToken = jwtHelper.decodeToken(token); //decodes token 
+        vm.loggedInUser = decodedToken.username; // add logged in user property so we can
+        console.log("add favorite logged in user is", vm.loggedInUser);
+        vm.stockFavorited = true;
+
+        stockDataFactory.addUserFavorite(vm.loggedInUser, vm.symbol).then(function(response) {
+            console.log(response);
+        }).catch(function(error) {
+            console.log(error);
+        });
+    };
+  
+    
+} // ends Stock Controller
+
+
     //     var id = $routeParams.id; // stores id
     //     var stock = vm.stock.Symbol;
     //     console.log("stock is ", stock);
@@ -55,6 +76,3 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
     //     vm.users = response.data;
     //     console.log(vm.users);
     // });
-    // };
-
-}

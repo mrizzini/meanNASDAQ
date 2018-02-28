@@ -2,31 +2,17 @@ angular.module('meanNASDAQ').factory('stockDataFactory', stockDataFactory);
 
 function stockDataFactory($http) {
     return {
-        // stockList: stockList,
         stocksDisplay: stocksDisplay,
         stockDisplay: stockDisplay,
         userDisplay: userDisplay,
-        // getResultsPage: getResultsPage
         postReview: postReview,
-        // stockPagination: stockPagination,
         searchStock: searchStock,
-        // postFavorite: postFavorite,
-        // searchDisplay: searchDisplay,
-        // showSearches: showSearches,
         addUserSearch: addUserSearch,
         login: login,
-        register: register
+        register: register,
+        addUserFavorite: addUserFavorite
     };
     
-    // function stockList() {
-    //     return $http.get('/api/stocks').then(complete).catch(failed);
-    // }
-    
-    // function getResultsPage(pageNumber) {
-    //      return $http.get('/api/stocks?page=' + pageNumber)
-    //         .then(complete).catch(failed);
-            
-    // }
     
     function stocksDisplay() {
         return $http.get('/api/stocks').then(complete).catch(failed);
@@ -36,27 +22,14 @@ function stockDataFactory($http) {
         return $http.get('/api/stocks/' + id).then(complete).catch(failed);
     }
     
-    // function stockPagination(pageNumber) {
-    //     return $http.get('/api/stocks?page=' + pageNumber).then(complete).catch(failed);
-    // }
-    
     function postReview(id, review) {
         return $http.post('/api/stocks/' + id + '/reviews', review).then(complete).catch(failed);
     }
     
-
     function searchStock(Symbol) {
         return $http.get('/api/stocks/search/' + Symbol).then(complete).catch(failed);
         // return $http.post('/api/users/user/' + user + '/searches/' + Symbol).then(complete).catch(failed);
     }
-    
-    // function searchDisplay(Symbol) {
-    //     return $http.get('/api/stocks/searches/' + Symbol).then(complete).catch(failed);
-    // }
-    
-    // function showSearches() {
-    //     return $http.get('/api/stocks/searches/allSearches').then(complete).catch(failed);
-    // }
     
     function userDisplay(user) {
         return $http.get('/api/users/' + user).then(complete).catch(failed);
@@ -71,16 +44,12 @@ function stockDataFactory($http) {
     }
     
     function addUserSearch(user, Symbol) {
-        // return $http.post('/api/users/' + user, Symbol).then(complete).catch(failed);
-        // return $http.post('/api/users/user/' + user + '/searches', Symbol).then(complete).catch(failed);
-        // return $http.post('/api/users/' + user, Symbol).then(complete).catch(failed);
         return $http.post('/api/users/' + user + '/searches', Symbol).then(complete).catch(failed);
-        // return $http.post('/api/users/' + user + '/searches', Symbol).then(complete).catch(failed);
     }
     
-    // function postFavorite(id, stock) {
-    //     return $http.post('/api/users/').then(complete).catch(failed);
-    // }
+    function addUserFavorite(user, stock) {
+        return $http.post('/api/users/' + user + '/favorites', stock).then(complete).catch(failed);
+    }
     
     function complete(response) {
         return response;
