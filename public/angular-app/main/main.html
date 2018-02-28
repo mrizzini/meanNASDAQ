@@ -4,7 +4,8 @@
 
 <form name="symbol" ng-submit="vm.search(); vm.searchDisplay()">
     <div class="search-group">
-    <label for="symbol">Stock Search by symbol: </label>
+    <p>We have information on every NASDAQ stock</p>
+    <label for="symbol">Search here by symbol: </label>
     <input id="symbol" type="symbol" required ng-model="vm.symbol">
     </div>
     <button type="submit" class="btn-primary">Search</button>
@@ -25,5 +26,15 @@
     <ul> 
         <li ng-repeat="searches in vm.userSearch"><a ng-href="https://www.nasdaq.com/symbol/{{ vm.userSearch[$index].search }}" target="_blank">{{searches.search}}</a></li>
     </ul>
+</div>
+<br>
+
+<div ng-show="vm.isLoggedIn()">
+<h3>{{vm.loggedInUser}}, here are today's top headlines in the business world: </h3>
+    <ul id="list">
+        <div>
+                
+        </div>
+    </ul> 
 </div>
 

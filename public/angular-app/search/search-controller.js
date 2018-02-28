@@ -1,10 +1,16 @@
+/*global $ APIKEY */
 angular.module('meanNASDAQ').controller('SearchController', SearchController);
 
 function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHelper) {
     var vm = this;
-    
+//   var token = $window.sessionStorage.token; // capturing token from session storage
+//     var decodedToken = jwtHelper.decodeToken(token); //decodes token 
+//     vm.loggedInUser = decodedToken.username; // add logged in user property so we can
     vm.isLoggedIn = function() {
         if (AuthFactory.isLoggedIn) {
+              var token = $window.sessionStorage.token; // capturing token from session storage
+    var decodedToken = jwtHelper.decodeToken(token); //decodes token 
+    vm.loggedInUser = decodedToken.username; // add logged in user property so we can
             return true;
         } else {
             return false;
@@ -67,5 +73,40 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
     }
     vm.isSubmitted = true;
     }; // Ends vm.search()
+
+
+$(document).ready(function() {
+    
+    $.ajax({
+		    method: "GET",
+		    url: "https://newsapi.org/v2/top-headlines",
+		    data: { category: "business", country: "us", language: "en", apiKey: APIKEY },
+		    success: function(data) {
+			     if (data.status == "ok") {
+					console.log(data);
+				    for (var i = 0; i < data.articles.length; i++) {
+				// 		var source = document.createElement("OPTION");
+				// 	    source.setAttribute("value", data.sources[i].id);
+				// 	    source.innerHTML = data.sources[i].name;
+				// 	    document.getElementById('selection').appendChild(source);
+				    var headline = data.articles[i].title;      
+					var articles = document.createElement("LI");
+	                var anchor = document.createElement("A");
+	                anchor.setAttribute('href', data.articles[i].url);
+	                anchor.setAttribute('target', "_blank");
+	                anchor.innerHTML = headline;
+	                articles.setAttribute("id", "articles" + i);
+	                var description = document.createElement("P");
+					var descriptionText = data.articles[i].description;
+				    description.innerHTML = "-" + descriptionText;
+				    document.getElementById("list").appendChild(articles);
+				    document.getElementById("articles" + i).appendChild(anchor);
+				    document.getElementById("list").appendChild(description);
+				    }
+			        }
+		       }
+	    });
+});
+
 
 } // Ends SearchController 
