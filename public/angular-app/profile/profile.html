@@ -3,7 +3,7 @@
 <h2>{{vm.loggedInUser}}'s Favorite NASDAQ Stocks:</h2>
 
 <ul>
-    <li ng-repeat="favorites in vm.favorites">{{favorites.favorites}}</li>
+    <li ng-repeat="favorites in vm.favorites"><a ng-href="https://www.nasdaq.com/symbol/{{ vm.favorites[$index].favorites }}" target="_blank">{{favorites.favorites}}</a></li>
 </ul>
 
 <br>

@@ -84,7 +84,7 @@ $(document).ready(function() {
 		    success: function(data) {
 			     if (data.status == "ok") {
 					console.log(data);
-				    for (var i = 0; i < data.articles.length; i++) {
+				    for (var i = 0; i < 10; i++) {
 				// 		var source = document.createElement("OPTION");
 				// 	    source.setAttribute("value", data.sources[i].id);
 				// 	    source.innerHTML = data.sources[i].name;
@@ -97,7 +97,7 @@ $(document).ready(function() {
 	                anchor.innerHTML = headline;
 	                articles.setAttribute("id", "articles" + i);
 	                var description = document.createElement("P");
-					var descriptionText = data.articles[i].description;
+					var descriptionText = data.articles[i].description || "Click the article for more information";
 				    description.innerHTML = "-" + descriptionText;
 				    document.getElementById("list").appendChild(articles);
 				    document.getElementById("articles" + i).appendChild(anchor);
