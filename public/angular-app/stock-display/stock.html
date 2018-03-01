@@ -1,8 +1,10 @@
 <h1><strong>Information on: </strong>{{ vm.stock.Name }}, ({{ vm.stock.Symbol }})</h1>
 
+<h3><strong>Sector: </strong>{{ vm.stock.Sector }}</h3>
+
 <h3><strong>Industry: </strong>{{ vm.stock.Industry }}</h3>
 
-<h3><strong>Last Sale: </strong>{{ vm.stock.LastSale | currency: "$" : 2 }}</h3>
+<h3><strong>IPO Year: </strong>{{ vm.stock.IPOyear }}</h3>
 
 <h3 ng-show="vm.stock.reviews.length > 0"><strong>User Comments: </strong></h3>
 <ul>
