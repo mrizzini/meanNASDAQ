@@ -1,3 +1,4 @@
+/*global $ stockAPIKEY */
 angular.module('meanNASDAQ').controller('StockController', StockController);
 
 function StockController($route, $routeParams, $window, stockDataFactory, AuthFactory, jwtHelper) {
@@ -11,6 +12,27 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
     vm.symbol = {
         symbol : vm.stock.Symbol
     };
+    
+        $(document).ready(function() {
+            var apiSymbol = vm.stock.Symbol;
+            console.log('apiSymbol is ', apiSymbol);
+            $.ajax({
+        		    url: "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" + apiSymbol + "&interval=60min&outputsize=compact&apikey=" + stockAPIKEY,
+        		    dataType: 'json',
+        		  //  data: { function: 'TIME_SERIES_INTRADAY', symbol: vm.symbol, interval: "1min", datatype: 'json', apikey: stockAPIKEY },
+        		    success: function(data) {
+        					console.log("api data is ", data);
+        					vm.todayOpen = data["Time Series (60min)"];
+        					console.log("vm.todayOpen", vm.todayOpen);
+        					
+        					
+        		       }
+        	    });
+        });
+    
+    
+    
+    
     });
 
     vm.isLoggedIn = function() {
@@ -55,5 +77,10 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
             console.log(error);
         });
     };
+    
+    
+    
+    
+    
     
 } // ends Stock Controller
