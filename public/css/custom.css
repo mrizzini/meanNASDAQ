@@ -20,3 +20,12 @@ body > .container {
     padding-top: 20px;
     color: white;
 }
+#trader {
+    border-style: solid;
+    border-color: black;
+}
+
+#easyPaginate {width:300px;}
+#easyPaginate img {display:block;margin-bottom:10px;}
+.easyPaginateNav a {padding:5px;}
+.easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}

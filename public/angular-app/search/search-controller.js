@@ -1,4 +1,4 @@
-/*global $ APIKEY */
+/*global $ APIKEY stockAPIKEY */
 angular.module('meanNASDAQ').controller('SearchController', SearchController);
 
 function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHelper) {
@@ -84,11 +84,7 @@ $(document).ready(function() {
 		    success: function(data) {
 			     if (data.status == "ok") {
 					console.log(data);
-				    for (var i = 0; i < 10; i++) {
-				// 		var source = document.createElement("OPTION");
-				// 	    source.setAttribute("value", data.sources[i].id);
-				// 	    source.innerHTML = data.sources[i].name;
-				// 	    document.getElementById('selection').appendChild(source);
+				    for (var i = 0; i < data.articles.length; i++) {
 				    var headline = data.articles[i].title;      
 					var articles = document.createElement("LI");
 	                var anchor = document.createElement("A");
@@ -99,14 +95,61 @@ $(document).ready(function() {
 	                var description = document.createElement("P");
 					var descriptionText = data.articles[i].description || "Click the article for more information";
 				    description.innerHTML = "-" + descriptionText;
-				    document.getElementById("list").appendChild(articles);
+				    document.getElementById("articlePaginate").appendChild(articles);
 				    document.getElementById("articles" + i).appendChild(anchor);
-				    document.getElementById("list").appendChild(description);
+				    document.getElementById("articlePaginate").appendChild(description);
 				    }
+				    $('#articlePaginate').easyPaginate({
+                    paginateElement: 'li',
+                    elementsPerPage: 5,
+                    effect: 'fade'
+                    });
 			        }
 		       }
+		       
+	
 	    });
 });
+
+
+        $(document).ready(function() {
+            $.ajax({
+        		    url: "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_INTRADAY&symbol=BTC&market=USD&apikey=" + stockAPIKEY,
+        		    dataType: 'json', // https:www.alphavantage.co/query?function=DIGITAL_CURRENCY_INTRADAY&symbol=BTC&market=EUR&apikey=demo
+        		  //  data: { function: 'TIME_SERIES_INTRADAY', symbol: vm.symbol, interval: "1min", datatype: 'json', apikey: stockAPIKEY },
+        		    success: function(data) {
+        		        console.log('CRYPTO data is, ', data);
+        		        var currentDate = data["Meta Data"]["7. Last Refreshed"];
+        		        var apiData = data["Time Series (Digital Currency Intraday)"][currentDate];
+        		        var price = "1a. price (USD)";
+        		        console.log('price is ', price);
+        		        console.log('apiData is, ', apiData);
+        		        console.log('current date is, ', currentDate);
+        
+        		        var btcCurrentPrice = [apiData][price];
+        		        console.log('btcCurrentPrice is ', btcCurrentPrice);
+        		        
+        		
+        		      
+            //             console.log('current price should be 1078.92 ', currentPrice);
+                            var currentBTC = document.createElement("SPAN");
+            				currentBTC.innerHTML = "$" + apiData;   //.slice(0, -2); 
+            				document.getElementById("currentBTCPrice").appendChild(currentBTC);
+        	           }
+        	    });
+        });
+
+// $('#articlePaginate').easyPaginate({
+//     paginateElement: 'li',
+//     elementsPerPage: 5,
+//     effect: 'climb'
+// });
+
+// $('#easyPaginate').easyPaginate({
+//     paginateElement: 'li',
+//     elementsPerPage: 3,
+//     effect: 'climb'
+// });
 
 
 } // Ends SearchController 

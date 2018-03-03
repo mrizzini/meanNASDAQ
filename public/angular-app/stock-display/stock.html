@@ -1,12 +1,23 @@
 <h1><strong>Information on: </strong>{{ vm.stock.Name }}, ({{ vm.stock.Symbol }})</h1>
 
-<h3><strong>Sector: </strong>{{ vm.stock.Sector }}</h3>
+<h4><strong>Sector: </strong>{{ vm.stock.Sector }}</h4>
 
-<h3><strong>Industry: </strong>{{ vm.stock.Industry }}</h3>
+<h4><strong>Industry: </strong>{{ vm.stock.Industry }}</h4>
 
-<h3><strong>IPO Year: </strong>{{ vm.stock.IPOyear }}</h3>
+<h4><strong>IPO Year: </strong>{{ vm.stock.IPOyear }}</h4>
 
-<h3 ng-show="vm.stock.reviews.length > 0"><strong>User Comments: </strong></h3>
+<div>
+<h2><strong>Trader Information:</strong></h2>
+<h4><strong>Last Updated: </strong></span><span id="currentDate"></h4>
+<h4><strong>Current Price: </strong><span id="currentPrice"></span></h4>
+<h4><strong>Open: </strong><span id="todayOpen"></span></h4>
+<h4><strong>Close: </strong><span id="todayClose"></span></h4>
+<h4><strong>High: </strong><span id="todayHigh"></span></h4>
+<h4><strong>Low: </strong><span id="todayLow"></span></h4>
+</div>
+
+
+<h2 ng-show="vm.stock.reviews.length > 0"><strong>User Comments: </strong></h2>
 <ul>
     <li ng-repeat="review in vm.stock.reviews">{{ review.name }} says: {{ review.review }}</li>
 </ul>

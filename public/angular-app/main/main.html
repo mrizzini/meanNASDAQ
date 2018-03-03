@@ -31,10 +31,18 @@
 
 <div ng-show="vm.isLoggedIn()">
 <h3>{{vm.loggedInUser}}, here are today's top headlines in the business world: </h3>
-    <ul id="list">
-        <div>
-                
-        </div>
-    </ul> 
+    <div id="articlePaginate">
+    <!--<ul id="list">-->
+        <!--<div id="articlePaginate">-->
+            
+        <!--</div>-->
+    <!--</ul> -->
+    </div>
 </div>
 
+
+<div ng-show="vm.isLoggedIn()">
+    <h3>Crypto-Corner</h3>
+    <h4>BTC, LTC, ETH INFO WILL GO HERE</h4>
+    <p><span id="currentBTCPrice"></span></p>
+</div>
