@@ -21,7 +21,9 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         		    dataType: 'json',
         		  //  data: { function: 'TIME_SERIES_INTRADAY', symbol: vm.symbol, interval: "1min", datatype: 'json', apikey: stockAPIKEY },
         		    success: function(data) {
-        					var currentDate = data["Meta Data"]["3. Last Refreshed"];
+        		            console.log('Intraday (1min) data is, ', data);
+        					var currentDate = data["Meta Data"]["3. Last Refreshed"].slice(0, 10); 
+        					console.log('Intraday 1 min currentDate is, ', currentDate.slice(0, 10));
         					var apiData = data["Time Series (Daily)"];
         					var todayData = apiData[currentDate];
         					var todayOpen = todayData["1. open"];
@@ -52,7 +54,7 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         	    });
         });
     
-            $(document).ready(function() {
+        $(document).ready(function() {
             var apiSymbol = vm.stock.Symbol;
             console.log('apiSymbol is ', apiSymbol);
             $.ajax({
@@ -65,7 +67,6 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         		        var apiData = data["Time Series (1min)"];
         		        console.log('current date is, ', currentDate);
         		        var currentPrice = apiData[currentDate]["4. close"];
-                        console.log('current price should be 1078.92 ', currentPrice);
                         var current = document.createElement("SPAN");
         				current.innerHTML = "$" + currentPrice.slice(0, -2); 
         				document.getElementById("currentPrice").appendChild(current);
