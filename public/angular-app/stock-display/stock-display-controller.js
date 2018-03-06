@@ -22,13 +22,31 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         		    dataType: 'json',
         		  //  data: { function: 'TIME_SERIES_INTRADAY', symbol: vm.symbol, interval: "1min", datatype: 'json', apikey: stockAPIKEY },
         		    success: function(data) {
-        					var currentDate = data["Meta Data"]["3. Last Refreshed"];
+        				// 	var currentDate = data["Meta Data"]["3. Last Refreshed"];
+        				// 	var apiData = data["Time Series (Daily)"];
+        				// 	var todayData = apiData[currentDate];
+        				// 	var todayOpen = todayData["1. open"];
+        				// 	var todayClose = todayData["4. close"];
+        				//  	var todayHigh = todayData["2. high"];
+        				//  	var todayLow=  todayData["3. low"];
+        				 	
+        				 	
+        				 	var currentDate = data["Meta Data"]["3. Last Refreshed"].slice(0, 10); 
+        					console.log('Intraday 1 min currentDate is, ', currentDate.slice(0, 10));
         					var apiData = data["Time Series (Daily)"];
         					var todayData = apiData[currentDate];
         					var todayOpen = todayData["1. open"];
         					var todayClose = todayData["4. close"];
         				 	var todayHigh = todayData["2. high"];
         				 	var todayLow=  todayData["3. low"];
+        				 	
+        				 	
+        				 	
+        				 	
+        				 	
+        				 	
+        				 	
+        				 	
         
         					var todayDate = document.createElement("SPAN");
         					todayDate.innerHTML = currentDate;
