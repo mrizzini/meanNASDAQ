@@ -16,7 +16,8 @@ module.exports.register = function(req, res) {
     User.create({ // creates user
         username: username,
         name: name,
-        password:  bcrypt.hashSync(password, bcrypt.genSaltSync(10)) // this encrypts password
+        password:  bcrypt.hashSync(password, bcrypt.genSaltSync(10)), // this encrypts password
+        funds: 10000
     }, function(err, user) {
        if (err) {
            console.log(err);
@@ -56,6 +57,7 @@ module.exports.login = function(req, res) {
     
 var _addUserSearch = function(req, res, user) {
     console.log('req body is', req.body);
+    console.log('user test', req.body.symbol);
     user.userSearch.push({
         search : req.body.symbol
     });

@@ -3,7 +3,6 @@ angular.module('meanNASDAQ').controller('SearchController', SearchController);
 
 function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHelper) {
     var vm = this;
-    
     vm.isLoggedIn = function() {
         if (AuthFactory.isLoggedIn) {
             var token = $window.sessionStorage.token; // capturing token from session storage

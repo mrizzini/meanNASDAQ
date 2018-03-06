@@ -1,13 +1,14 @@
 <h1>{{vm.loggedInUser}}'s Profile</h1>
 
-<h2>{{vm.loggedInUser}}'s Favorite NASDAQ Stocks:</h2>
+<h2 ng-if="vm.favorites.length > 0">{{vm.loggedInUser}}'s Favorite NASDAQ Stocks:</h2>
 
 <ul>
     <li ng-repeat="favorites in vm.favorites"><a ng-href="https://www.nasdaq.com/symbol/{{ vm.favorites[$index].favorites }}" target="_blank">{{favorites.favorites}}</a></li>
 </ul>
 
 <br>
-<br>
+
+<h3>{{vm.loggedInUser}}, you current have {{vm.funds | currency }} in your account with us.</h3>
 <br>
 <div ng-click="vm.deleteProfile()">
     <button type="submit" class="btn btn-danger">Delete your profile</button>

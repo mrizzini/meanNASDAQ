@@ -2,18 +2,27 @@ var mongoose = require('mongoose');
 
 var searchSchema = new mongoose.Schema({ // searches are sub-documents. create its own Schema
     search : {
-    type : String,
+        type : String,
   },
   createdOn : {
-    type : Date,
-    "default" : Date.now
+        type : Date,
+        "default" : Date.now
   }
 });
 
 var favoritesSchema = new mongoose.Schema({ // searches are sub-documents. create its own Schema
     favorites : {
-    type : String,
+        type : String,
   }
+});
+
+var stocksOwnedSchema = new mongoose.Schema({ // searches are sub-documents. create its own Schema
+    stock : {
+        type : String,
+  },
+    amount: {
+        type: Number
+    }
 });
 
 var userSchema = new mongoose.Schema({
@@ -29,6 +38,10 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    funds: {
+        type: Number  
+    },
+    stocksOwned: [stocksOwnedSchema],
     userSearch: [searchSchema],
     
     userFavorites : [favoritesSchema]

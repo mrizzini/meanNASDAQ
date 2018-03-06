@@ -5,6 +5,7 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
     var vm = this;
     var id = $routeParams.id; // stores id
     vm.isSubmitted = false;
+    var currentPrice;
     // $http.get('/api/stocks').then(function(response) {
     stockDataFactory.stockDisplay(id).then(function(response) {
     console.log(response); 
@@ -21,9 +22,7 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         		    dataType: 'json',
         		  //  data: { function: 'TIME_SERIES_INTRADAY', symbol: vm.symbol, interval: "1min", datatype: 'json', apikey: stockAPIKEY },
         		    success: function(data) {
-        		            console.log('Intraday (1min) data is, ', data);
-        					var currentDate = data["Meta Data"]["3. Last Refreshed"].slice(0, 10); 
-        					console.log('Intraday 1 min currentDate is, ', currentDate.slice(0, 10));
+        					var currentDate = data["Meta Data"]["3. Last Refreshed"];
         					var apiData = data["Time Series (Daily)"];
         					var todayData = apiData[currentDate];
         					var todayOpen = todayData["1. open"];
@@ -54,7 +53,7 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         	    });
         });
     
-        $(document).ready(function() {
+            $(document).ready(function() {
             var apiSymbol = vm.stock.Symbol;
             console.log('apiSymbol is ', apiSymbol);
             $.ajax({
@@ -66,7 +65,8 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         		        var currentDate = data["Meta Data"]["3. Last Refreshed"];
         		        var apiData = data["Time Series (1min)"];
         		        console.log('current date is, ', currentDate);
-        		        var currentPrice = apiData[currentDate]["4. close"];
+        		        currentPrice = apiData[currentDate]["4. close"];
+                        console.log('current price should be 1078.92 ', currentPrice);
                         var current = document.createElement("SPAN");
         				current.innerHTML = "$" + currentPrice.slice(0, -2); 
         				document.getElementById("currentPrice").appendChild(current);
@@ -120,7 +120,23 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
     };
     
     
-    
+    vm.buyStock = function() {
+        var token = $window.sessionStorage.token; // capturing token from session storage
+        var decodedToken = jwtHelper.decodeToken(token); //decodes token 
+        vm.loggedInUser = decodedToken.username; // add logged in user property so we can
+        console.log("buy stock logged in user is", vm.loggedInUser);
+        var stockInfo = {
+            symbol: vm.symbol,
+            price: currentPrice.slice(0, -2),
+            amount: vm.amount
+        };
+        console.log('stockInfo for buyStock is, ', stockInfo);
+        stockDataFactory.userBuyStock(vm.loggedInUser, stockInfo).then(function(response) {
+            console.log(response);
+        }).catch(function(error) {
+            console.log(error);
+        });
+    };
     
     
     

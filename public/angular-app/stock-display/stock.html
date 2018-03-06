@@ -36,4 +36,14 @@
 <div ng-show="!vm.stockFavorited" ng-click="vm.addFavorite()">
     <button type="submit" class="btn-primary">Add this stock to your favorites</button>
 </div>
+
+<div>
+    <h4>Buy this stock</h4>
+    <form name="vm.buyStockForm" ng-submit="vm.buyStock()">
+        <input id="amount" type="amount" required placeholder="Amount of shares" ng-model="vm.amount">
+        <button type="submit" class="btn-primary">Buy this stock</button>
+    </form>
+</div>
+
+
 </div>
