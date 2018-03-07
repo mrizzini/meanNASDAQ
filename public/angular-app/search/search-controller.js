@@ -15,6 +15,7 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
     };
     
     vm.search = function() {
+        console.log("vm search is, ", vm);
         var symbol =  vm.symbol.toUpperCase();
         var userSearch = {
         symbol: vm.symbol.toUpperCase()

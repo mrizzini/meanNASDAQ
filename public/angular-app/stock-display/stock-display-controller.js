@@ -144,9 +144,10 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         vm.loggedInUser = decodedToken.username; // add logged in user property so we can
         console.log("buy stock logged in user is", vm.loggedInUser);
         var stockInfo = {
-            symbol: vm.symbol,
+            symbol: vm.symbol.symbol,
             price: currentPrice.slice(0, -2),
-            amount: vm.amount
+            amount: vm.amount,
+            totalCost: ((currentPrice.slice(0, -2)) * vm.amount)
         };
         console.log('stockInfo for buyStock is, ', stockInfo);
         stockDataFactory.userBuyStock(vm.loggedInUser, stockInfo).then(function(response) {
@@ -154,6 +155,13 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         }).catch(function(error) {
             console.log(error);
         });
+        
+        stockDataFactory.userUpdateFunds(vm.loggedInUser, stockInfo).then(function(response) {
+            console.log(response);
+        }).catch(function(error) {
+            console.log(error);
+        });
+        
     };
     
     

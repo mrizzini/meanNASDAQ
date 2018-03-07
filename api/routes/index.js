@@ -39,7 +39,7 @@ router
     
 router
     .route('/users/:user') // api/users
-    .get(ctrlUsers.usersGetAll) // this maps the controller to the route
+    .get(ctrlUsers.usersGetOne) // this maps the controller to the route
     .delete(ctrlUsers.deleteUser);
     // .post(ctrlUsers.authenticate, ctrlStocks.stocksAddFavorite);
 
@@ -50,6 +50,13 @@ router
 router
     .route('/users/:user/favorites')
     .post(ctrlUsers.usersAddFavorite);
+    
+router
+    .route('/users/:user/transaction')
+    .get(ctrlUsers.usersGetOne)
+    .put(ctrlUsers.updateFunds)
+    .post(ctrlUsers.usersBuyStock);
+    
 
  module.exports = router; //exports router to other files
 

@@ -9,6 +9,7 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
     console.log("userDisplay response is", response); 
     vm.favorites = response.data.userFavorites;
     vm.funds = response.data.funds;
+    vm.stocksOwned = response.data.stocksOwned;
     });
     
     

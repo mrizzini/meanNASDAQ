@@ -8,7 +8,12 @@
 
 <br>
 
-<h3>{{vm.loggedInUser}}, you current have {{vm.funds | currency }} in your account with us.</h3>
+<h3>{{vm.loggedInUser}}, you currently have {{vm.funds | currency }} in your account with us.</h3>
+
+<h3>You own the following:</h3>
+<ul>
+    <li ng-repeat="stocks in vm.stocksOwned">{{stocks.amount}} shares of {{stocks.stock}}</li>
+</ul>
 <br>
 <div ng-click="vm.deleteProfile()">
     <button type="submit" class="btn btn-danger">Delete your profile</button>
