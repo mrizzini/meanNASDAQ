@@ -152,6 +152,7 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         console.log('stockInfo for buyStock is, ', stockInfo);
         stockDataFactory.userBuyStock(vm.loggedInUser, stockInfo).then(function(response) {
             console.log(response);
+            vm.message = 'Share(s) purchased';
         }).catch(function(error) {
             console.log(error);
         });

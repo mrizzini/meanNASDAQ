@@ -10,10 +10,25 @@
 
 <h3>{{vm.loggedInUser}}, you currently have {{vm.funds | currency }} in your account with us.</h3>
 
+<h3 ng-show="vm.stocksOwned.length < 1">You don't own any stocks yet! Check the individual stock's page to purchase/sell</h3>
+<!--<h3 ng-show="vm.stocksOwned.length > 0">You own the following:</h3>-->
+<!--<ul>-->
+<!--    <li ng-repeat="stocks in vm.stocksOwned track by $index">{{stocks.amount}} shares of {{stocks.stock}}</li>-->
+<!--</ul>-->
+
+<div ng-show="vm.stocksOwned.length > 0">
 <h3>You own the following:</h3>
-<ul>
-    <li ng-repeat="stocks in vm.stocksOwned">{{stocks.amount}} shares of {{stocks.stock}}</li>
-</ul>
+<table>
+    <tr class="tableHead">
+        <td>Stock</td>
+        <td>Amount of Shares</td>
+    </tr>
+    <tr ng-repeat="stocks in vm.stocksOwned track by $index">
+    <td>{{stocks.stock}}</td>    
+    <td>{{stocks.amount}}</td>    
+    </tr>
+</table>
+</div>
 <br>
 <div ng-click="vm.deleteProfile()">
     <button type="submit" class="btn btn-danger">Delete your profile</button>
