@@ -16,7 +16,8 @@ module.exports.register = function(req, res) {
     User.create({ // creates user
         username: username,
         name: name,
-        password:  bcrypt.hashSync(password, bcrypt.genSaltSync(10)) // this encrypts password
+        password:  bcrypt.hashSync(password, bcrypt.genSaltSync(10)), // this encrypts password
+        funds: 10000
     }, function(err, user) {
        if (err) {
            console.log(err);
@@ -56,6 +57,7 @@ module.exports.login = function(req, res) {
     
 var _addUserSearch = function(req, res, user) {
     console.log('req body is', req.body);
+    console.log('user test', req.body.symbol);
     user.userSearch.push({
         search : req.body.symbol
     });
@@ -127,9 +129,9 @@ module.exports.authenticate = function(req, res, next) { // create authenticatio
 }; // jwt.io to validate tokesn
 
 
-module.exports.usersGetAll = function (req, res) {
+module.exports.usersGetOne = function (req, res) {
     var username = req.params.user;
-    console.log('USERS GET ALL username is', req.params);
+    console.log('USERS GET ONE username is', req.params);
     User.findOne({
         username: username
     })
@@ -143,7 +145,7 @@ module.exports.usersGetAll = function (req, res) {
             response.status = 500;
             response.message = err;
         } else if (!doc) {
-            console.log('UsersGetAll Username not found in database ' + username);
+            console.log('UsersGetOne Username not found in database ' + username);
             response.status = 404;
             response.message = {
                 "message": "User not found " + username
@@ -240,3 +242,124 @@ module.exports.deleteUser = function(req, res) {
     });
 };
 
+var _addUserStock = function(req, res, user) {
+    console.log('req body is', req.body);
+    user.stocksOwned.push({
+        stock : req.body.symbol,
+        amount: req.body.amount
+    });
+    
+    user.save(function(err, userStocksUpdated) {
+        if (err) {
+            res
+            .status(500)
+            .json(err);
+        } else {
+            res
+            .status(201)
+            .json(userStocksUpdated.stocksOwned[userStocksUpdated.stocksOwned.length - 1]);
+        }
+    });
+};
+
+
+module.exports.usersBuyStock = function(req, res) {
+    console.log('module.exports.usersBuyStock function hit');  
+    var username = req.params.user;
+    var symbol = req.body.symbol;
+    var amount = req.body.amount;
+    var totalCost = req.body.totalCost;
+    console.log('usersBuyStock user is', username);
+    console.log('usersBuyStock symbol is', symbol);
+    console.log('usersBuyStock amount is', amount);
+    console.log('usersBuyStock totalCost is', totalCost);
+    
+    User.findOne({
+        username: username
+    })
+    .exec(function(err, doc) {
+        var response = {
+            status: 200,
+            message: []
+        };
+        if (err) {
+            console.log('Error finding user');
+            response.status = 500;
+            response.message = err;
+        } else if (!doc) {
+            console.log('usersBuyStock Username not found in database ' + username);
+            response.status = 404;
+            response.message = {
+                "message": "User not found " + username
+            };
+        } if (doc) {
+            _addUserStock(req, res, doc);
+        } else {
+            res
+            .status(response.status)
+            .json( response.message );
+        }
+    });
+    
+};
+
+module.exports.updateFunds = function(req, res) {
+    console.log('updateFunds hit');
+    var username = req.params.user;
+    var totalCost = req.body.totalCost;
+    console.log("updateFunds username is, ", username);
+    console.log('updateFunds totalCost is', totalCost);
+    console.log('totalCost is a ', typeof(totalCost));
+    
+    User
+    .findOne({
+        username: username
+    })
+    .select('funds')
+    .exec(function(err, user) {
+        var funds = user.funds;
+        var response = {
+            status: 200,
+            message: {}
+        };
+        if (err) {
+                console.log("Error finding user");
+                response.status = 500;
+                response.message = err;
+        } else if (!user) {
+                console.log("User not found in database ", user);
+                response.status = 404;
+                response.message = {
+                    "message" : 'User not found ' + user
+                };
+            }   else {
+                response.message = user.funds;
+                // If the review doesn't exist Mongoose returns null
+                if (!response.message) {
+                    response.status = 404;
+                    response.message = {
+                        "message" : "Funds not found", funds
+                    };
+                }
+            }
+            
+            if (response.status !== 200) {
+            res
+                .status(response.status)
+                .json(response.message); // returns just the specific review
+        } else {
+            user.funds = (user.funds - totalCost);
+            user.save(function(err, fundsUpdated) {
+                if (err) {
+                    res
+                    .status(500)
+                    .json(err);
+                } else {
+                    res
+                    .status(204)
+                    .json();
+                }
+            });
+        }
+    });
+};

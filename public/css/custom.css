@@ -25,6 +25,31 @@ body > .container {
     border-color: black;
 }
 
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 40%;
+}
+
+.tableHead {
+    font-weight: bold;   
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+
+
+
+
 #easyPaginate {width:300px;}
 #easyPaginate img {display:block;margin-bottom:10px;}
 .easyPaginateNav a {padding:5px;}

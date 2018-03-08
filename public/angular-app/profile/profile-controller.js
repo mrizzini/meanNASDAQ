@@ -8,6 +8,8 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
     stockDataFactory.userDisplay(vm.loggedInUser).then(function(response) {
     console.log("userDisplay response is", response); 
     vm.favorites = response.data.userFavorites;
+    vm.funds = response.data.funds;
+    vm.stocksOwned = response.data.stocksOwned;
     });
     
     

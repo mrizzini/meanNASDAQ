@@ -6,7 +6,8 @@ function RegisterController($http, stockDataFactory) {
     vm.register = function() {
         var user = {
             username: vm.username,
-            password: vm.password
+            password: vm.password,
+            funds: 10000
         };
         
         if (!vm.username || !vm.password) {
