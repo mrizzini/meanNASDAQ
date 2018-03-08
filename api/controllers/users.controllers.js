@@ -306,7 +306,7 @@ module.exports.usersBuyStock = function(req, res) {
 module.exports.updateFunds = function(req, res) {
     console.log('updateFunds hit');
     var username = req.params.user;
-    var totalCost = parseInt(req.body.totalCost, 10);
+    var totalCost = req.body.totalCost;
     console.log("updateFunds username is, ", username);
     console.log('updateFunds totalCost is', totalCost);
     console.log('totalCost is a ', typeof(totalCost));

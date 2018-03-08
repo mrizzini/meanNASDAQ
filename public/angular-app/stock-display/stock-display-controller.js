@@ -22,14 +22,6 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         		    dataType: 'json',
         		  //  data: { function: 'TIME_SERIES_INTRADAY', symbol: vm.symbol, interval: "1min", datatype: 'json', apikey: stockAPIKEY },
         		    success: function(data) {
-        				// 	var currentDate = data["Meta Data"]["3. Last Refreshed"];
-        				// 	var apiData = data["Time Series (Daily)"];
-        				// 	var todayData = apiData[currentDate];
-        				// 	var todayOpen = todayData["1. open"];
-        				// 	var todayClose = todayData["4. close"];
-        				//  	var todayHigh = todayData["2. high"];
-        				//  	var todayLow=  todayData["3. low"];
-        				 	
         				 	
         				 	var currentDate = data["Meta Data"]["3. Last Refreshed"].slice(0, 10); 
         					console.log('Intraday 1 min currentDate is, ', currentDate.slice(0, 10));
@@ -39,15 +31,7 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         					var todayClose = todayData["4. close"];
         				 	var todayHigh = todayData["2. high"];
         				 	var todayLow=  todayData["3. low"];
-        				 	
-        				 	
-        				 	
-        				 	
-        				 	
-        				 	
-        				 	
-        				 	
-        
+        				 
         					var todayDate = document.createElement("SPAN");
         					todayDate.innerHTML = currentDate;
         	        		document.getElementById("currentDate").appendChild(todayDate);
@@ -146,23 +130,44 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         var stockInfo = {
             symbol: vm.symbol.symbol,
             price: currentPrice.slice(0, -2),
-            amount: vm.amount,
+            amount: parseFloat(vm.amount),
             totalCost: ((currentPrice.slice(0, -2)) * vm.amount)
         };
         console.log('stockInfo for buyStock is, ', stockInfo);
-        stockDataFactory.userBuyStock(vm.loggedInUser, stockInfo).then(function(response) {
-            console.log(response);
-            vm.message = 'Share(s) purchased';
-        }).catch(function(error) {
-            console.log(error);
-        });
         
-        stockDataFactory.userUpdateFunds(vm.loggedInUser, stockInfo).then(function(response) {
-            console.log(response);
-        }).catch(function(error) {
-            console.log(error);
-        });
-        
+        if (Number.isInteger(stockInfo.amount)) {
+            stockDataFactory.userDisplay(vm.loggedInUser).then(function(response) {
+                console.log("userDisplay in buyStock response is", response);
+                vm.funds = response.data.funds;
+                vm.favorites = response.data.userFavorites;
+                vm.funds = response.data.funds;
+                vm.stocksOwned = response.data.stocksOwned;
+           
+            if (stockInfo.totalCost <= vm.funds) {
+            
+                stockDataFactory.userBuyStock(vm.loggedInUser, stockInfo).then(function(response) {
+                    console.log(response);
+                    vm.message = 'Share(s) purchased';
+                }).catch(function(error) {
+                    console.log(error);
+                }); // ends stockDataFactory.userBuyStock
+                
+                stockDataFactory.userUpdateFunds(vm.loggedInUser, stockInfo).then(function(response) {
+                    console.log(response);
+                }).catch(function(error) {
+                    console.log(error);
+                }); // ends stockDataFactory.userUpdateFunds
+            
+                
+            } else { // ends if (stockInfo.totalCost <= vm.funds)
+                alert('You do not have sufficent funds in your account to purchase');
+            } 
+            
+            }); // ends stockDataFactory.userDisplay
+        }  else { // ends if (Number.isInteger(stockInfo.amount))
+                alert('You have not entered a whole number. Please try again');
+            
+        }
     };
     
     
