@@ -14,8 +14,35 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
     vm.stocksOwned = response.data.stocksOwned;
     });
     
-    var getCurrentPrice = function (symbol) {
-        $(document).ready(function() {
+    // var getCurrentPrice = function (symbol) {
+    //     $(document).ready(function() {
+    //       var apiSymbol = symbol;
+    //       console.log('apiSymbol is ', apiSymbol);
+    //       $.ajax({
+    //     		    url: "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" + apiSymbol + "&interval=1min&outputsize=compact&apikey=" + stockAPIKEY,
+    //     		    dataType: 'json',
+    //     		  //  data: { function: 'TIME_SERIES_INTRADAY', symbol: vm.symbol, interval: "1min", datatype: 'json', apikey: stockAPIKEY },
+    //     		    success: function(data) {
+    //     		        console.log('second data is, ', data);
+    //     		        var currentDate = data["Meta Data"]["3. Last Refreshed"];
+    //     		        var apiData = data["Time Series (1min)"];
+    //     		        console.log('current date is, ', currentDate);
+    //     		        currentPrice = apiData[currentDate]["4. close"];
+    //     		        currentPrice = currentPrice.slice(0, -2);
+    //     		        currentPrice = parseFloat(currentPrice);
+    //                 console.log('current price should be 1078.92 ', currentPrice);
+    //             //     var current = document.createElement("SPAN");
+    //     				    // current.innerHTML = "$" + currentPrice.slice(0, -2); 
+    //     				    // document.getElementById("currentPrice").appendChild(current);
+    //     	           }
+    //     	    });
+    //     });
+    //     return currentPrice;
+    // };
+    
+    vm.getCurrentPrice = function(symbol) {
+      console.log('other button clicked');
+              $(document).ready(function() {
           var apiSymbol = symbol;
           console.log('apiSymbol is ', apiSymbol);
           $.ajax({
@@ -23,27 +50,31 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
         		    dataType: 'json',
         		  //  data: { function: 'TIME_SERIES_INTRADAY', symbol: vm.symbol, interval: "1min", datatype: 'json', apikey: stockAPIKEY },
         		    success: function(data) {
-        		        console.log('second data is, ', data);
+        		        console.log('selling stock getting current price data is, ', data);
         		        var currentDate = data["Meta Data"]["3. Last Refreshed"];
         		        var apiData = data["Time Series (1min)"];
         		        console.log('current date is, ', currentDate);
         		        currentPrice = apiData[currentDate]["4. close"];
-                    console.log('current price should be 1078.92 ', currentPrice);
-                //     var current = document.createElement("SPAN");
-        				    // current.innerHTML = "$" + currentPrice.slice(0, -2); 
-        				    // document.getElementById("currentPrice").appendChild(current);
+        		        currentPrice = currentPrice.slice(0, -2);
+        		        currentPrice = parseFloat(currentPrice);
+                    console.log('current price should is ', currentPrice);
+                    var current = document.createElement("SPAN");
+                    current.setAttribute("id", "symbolIs" + apiSymbol);
+        				    current.innerHTML = currentPrice; 
+        				    document.getElementById("currentPrice").appendChild(current);
         	           }
         	    });
         });
         return currentPrice;
     };
     
-    
     vm.sellStock = function(stockId, symbol, amount) {
-      getCurrentPrice(symbol);
+      // getCurrentPrice(symbol);
+      var sellStockCurrentPrice = parseFloat(document.getElementById('symbolIs' + symbol).innerHTML);
+      // sellStockCurrentPrice = parseFloat(sellStockCurrentPrice, 10);
       console.log('vm.sellStock hit');
-      console.log('selling ', amount + ' shares of ', +  symbol + ' stockId of ', stockId);
-      console.log('CURRENT PRICE IS ', currentPrice);
+      console.log('selling ', amount + ' shares of ' +  symbol + ' stockId of ', stockId);
+      console.log('CURRENT PRICE IS ', sellStockCurrentPrice);
 
       var token = $window.sessionStorage.token; // capturing token from session storage
       var decodedToken = jwtHelper.decodeToken(token); //decodes token 
@@ -69,19 +100,19 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
       //   	           }
       //   	    });
       //   });
-        
-        
-        
-        // console.log("sell stock logged in user is", vm.loggedInUser);
-        var stockInfo = {
+          if (currentPrice) {
+            var stockInfo = {
             symbol: symbol,
-            price: currentPrice.slice(0, -2),
+            price: sellStockCurrentPrice,
             amount: parseFloat(amount),
-            totalCost: ((currentPrice.slice(0, -2)) * vm.amount)
-        };
-        console.log('stockInfo for sellStock is, ', stockInfo);
-        
-        // if (Number.isInteger(stockInfo.amount)) {
+            totalCost: (sellStockCurrentPrice * amount)
+          };
+            console.log('stockInfo for sellStock is, ', stockInfo);
+          }
+          
+        if (Number.isInteger(stockInfo.amount) && stockInfo.totalCost) {
+            console.log('amount is a number');
+            console.log('totalCost is ', stockInfo.totalCost);
         //     stockDataFactory.userDisplay(vm.loggedInUser).then(function(response) {
         //         console.log("userDisplay in buyStock response is", response);
         //         vm.funds = response.data.funds;
@@ -113,7 +144,7 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
         // }  else { // ends if (Number.isInteger(stockInfo.amount))
         //         alert('You have not entered a whole number. Please try again');
             
-        // }
+        }
     };
     
     
