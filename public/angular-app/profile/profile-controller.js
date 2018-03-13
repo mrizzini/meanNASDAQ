@@ -6,6 +6,7 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
     var token = $window.sessionStorage.token; // capturing token from session storage
     var decodedToken = jwtHelper.decodeToken(token); //decodes token 
     var currentPrice;
+    var buttonIndex;
     vm.loggedInUser = decodedToken.username; // add logged in user property so we can
     stockDataFactory.userDisplay(vm.loggedInUser).then(function(response) {
     console.log("userDisplay response is", response); 
@@ -40,11 +41,13 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
     //     return currentPrice;
     // };
     
-    vm.getCurrentPrice = function(symbol) {
+    vm.getCurrentPrice = function(symbol, index) {
       console.log('other button clicked');
               $(document).ready(function() {
           var apiSymbol = symbol;
+          buttonIndex = parseFloat(index.currentTarget.id);
           console.log('apiSymbol is ', apiSymbol);
+          console.log('index is ', buttonIndex);
           $.ajax({
         		    url: "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" + apiSymbol + "&interval=1min&outputsize=compact&apikey=" + stockAPIKEY,
         		    dataType: 'json',
@@ -65,12 +68,16 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
         	           }
         	    });
         });
-        return currentPrice;
+        return buttonIndex;
     };
     
     vm.sellStock = function(stockId, symbol, amount) {
+      console.log('buttonIndex is ', buttonIndex);
       // getCurrentPrice(symbol);
       var sellStockCurrentPrice = parseFloat(document.getElementById('symbolIs' + symbol).innerHTML);
+      // // var tagName = document.getElementsByTagName('td');
+      // var stockIdNumber = $(this).attr('id');
+      // console.log('td is is', index);
       // sellStockCurrentPrice = parseFloat(sellStockCurrentPrice, 10);
       console.log('vm.sellStock hit');
       console.log('selling ', amount + ' shares of ' +  symbol + ' stockId of ', stockId);
@@ -105,7 +112,8 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
             symbol: symbol,
             price: sellStockCurrentPrice,
             amount: parseFloat(amount),
-            totalCost: (sellStockCurrentPrice * amount)
+            totalCost: (sellStockCurrentPrice * amount),
+            index: buttonIndex
           };
             console.log('stockInfo for sellStock is, ', stockInfo);
           }
@@ -122,18 +130,18 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
            
         //     if (stockInfo.totalCost <= vm.funds) {
             
-        //         stockDataFactory.userBuyStock(vm.loggedInUser, stockInfo).then(function(response) {
-        //             console.log(response);
-        //             vm.message = 'Share(s) purchased';
-        //         }).catch(function(error) {
-        //             console.log(error);
-        //         }); // ends stockDataFactory.userBuyStock
+                stockDataFactory.userSellStock(vm.loggedInUser, stockInfo).then(function(response) {
+                    console.log(response);
+                    vm.message = 'Share(s) sold';
+                }).catch(function(error) {
+                    console.log(error);
+                }); // ends stockDataFactory.userBuyStock
                 
-        //         stockDataFactory.userUpdateFunds(vm.loggedInUser, stockInfo).then(function(response) {
-        //             console.log(response);
-        //         }).catch(function(error) {
-        //             console.log(error);
-        //         }); // ends stockDataFactory.userUpdateFunds
+                stockDataFactory.userSellUpdateFunds(vm.loggedInUser, stockInfo).then(function(response) {
+                    console.log(response);
+                }).catch(function(error) {
+                    console.log(error);
+                }); // ends stockDataFactory.userUpdateFunds
             
                 
         //     } else { // ends if (stockInfo.totalCost <= vm.funds)

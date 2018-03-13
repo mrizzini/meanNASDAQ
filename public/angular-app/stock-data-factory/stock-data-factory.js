@@ -13,7 +13,9 @@ function stockDataFactory($http) {
         login: login,
         register: register,
         userBuyStock: userBuyStock,
-        userUpdateFunds: userUpdateFunds
+        userUpdateFunds: userUpdateFunds,
+        userSellStock: userSellStock,
+        userSellUpdateFunds: userSellUpdateFunds
     };
     
     function stocksDisplay() {
@@ -37,10 +39,6 @@ function stockDataFactory($http) {
         return $http.get('/api/users/' + user).then(complete).catch(failed);
     }
     
-    function userUpdateFunds(user, stockInfo) {
-        return $http.put('/api/users/' + user + '/transaction', stockInfo).then(complete).catch(failed);
-    }
-    
     function addUserSearch(user, Symbol) {
         return $http.post('/api/users/' + user + '/searches', Symbol).then(complete).catch(failed);
     }
@@ -50,7 +48,19 @@ function stockDataFactory($http) {
     }
         
     function userBuyStock(user, stockInfo) {
-        return $http.post('/api/users/' + user + '/transaction', stockInfo).then(complete).catch(failed);
+        return $http.post('/api/users/' + user + '/buyStock', stockInfo).then(complete).catch(failed);
+    }
+    
+    function userUpdateFunds(user, stockInfo) {
+        return $http.put('/api/users/' + user + '/buyStock', stockInfo).then(complete).catch(failed);
+    }
+    
+    function userSellStock(user, stockInfo) {
+        return $http.put('/api/users/' + user + '/sellStock', stockInfo).then(complete).catch(failed);
+    }
+    
+    function userSellUpdateFunds(user, stockInfo) {
+        return $http.put('/api/users/' + user + '/sellStock/updateFunds', stockInfo).then(complete).catch(failed);
     }
     
     function deleteProfile(user) {

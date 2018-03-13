@@ -52,10 +52,21 @@ router
     .post(ctrlUsers.usersAddFavorite);
     
 router
-    .route('/users/:user/transaction')
+    .route('/users/:user/buyStock')
     .get(ctrlUsers.usersGetOne)
     .put(ctrlUsers.updateFunds)
     .post(ctrlUsers.usersBuyStock);
+    
+router
+    .route('/users/:user/sellStock')
+    .put(ctrlUsers.usersSellStock);
+    // .put(ctrlUsers.userSellUpdateFunds);
+    
+router
+    .route('/users/:user/sellStock/updateFunds')
+    // .put(ctrlUsers.usersSellStock)
+    .put(ctrlUsers.userSellUpdateFunds);
+
     
 
  module.exports = router; //exports router to other files

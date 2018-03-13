@@ -363,3 +363,131 @@ module.exports.updateFunds = function(req, res) {
         }
     });
 };
+
+module.exports.usersSellStock = function(req, res) {
+    console.log('userSellStock hit');
+    var username = req.params.user;
+    var totalCost = req.body.totalCost;
+    var symbol = req.body.symbol;
+    var amount = req.body.amount;
+    var index = req.body.index
+    console.log("userSellStock username is, ", username);
+    console.log('userSellStock totalCost is', totalCost);
+    console.log('userSellStock ', typeof(totalCost));
+    console.log('userSellStock symbol is', symbol);
+    console.log('userSellStock index is', index);
+    
+    User
+    .findOne({
+        username: username
+    })
+    .select({'stocksOwned': symbol})
+    .exec(function(err, user) {
+        console.log("test line ", user.stocksOwned[index]);
+        var oldStockOwnedAmount = user.stocksOwned[index].amount;
+        var newStockOwnedAmount = oldStockOwnedAmount - amount;
+        var response = {
+            status: 200,
+            message: {}
+        };
+        if (err) {
+                console.log("Error finding user");
+                response.status = 500;
+                response.message = err;
+        } else if (!user) {
+                console.log("User not found in database ", user);
+                response.status = 404;
+                response.message = {
+                    "message" : 'User not found ' + user
+                };
+            }   else {
+                response.message = user.stocksOwned;
+                if (!response.message) {
+                    response.status = 404;
+                    response.message = {
+                        "message" : "Stocks Owned not found", oldStockOwnedAmount
+                    };
+                }
+            }
+            
+            if (response.status !== 200) {
+            res
+                .status(response.status)
+                .json(response.message); // returns just the specific review
+        } else {
+            user.stocksOwned[index].amount = newStockOwnedAmount;
+            user.save(function(err, stockUpdated) {
+                if (err) {
+                    res
+                    .status(500)
+                    .json(err);
+                } else {
+                    res
+                    .status(204)
+                    .json();
+                }
+            });
+        }
+    });
+};
+
+module.exports.userSellUpdateFunds = function(req, res) {
+    console.log('userSellUpdateFunds hit');
+    var username = req.params.user;
+    var totalCost = req.body.totalCost;
+    console.log("userSellUpdateFunds username is, ", username);
+    console.log('userSellUpdateFunds totalCost is', totalCost);
+    console.log('totalCost is a ', typeof(totalCost));
+    
+    User
+    .findOne({
+        username: username
+    })
+    .select('funds')
+    .exec(function(err, user) {
+        var funds = user.funds;
+        var response = {
+            status: 200,
+            message: {}
+        };
+        if (err) {
+                console.log("Error finding user");
+                response.status = 500;
+                response.message = err;
+        } else if (!user) {
+                console.log("User not found in database ", user);
+                response.status = 404;
+                response.message = {
+                    "message" : 'User not found ' + user
+                };
+            }   else {
+                response.message = user.funds;
+                // If the review doesn't exist Mongoose returns null
+                if (!response.message) {
+                    response.status = 404;
+                    response.message = {
+                        "message" : "Funds not found", funds
+                    };
+                }
+            }
+            
+            if (response.status !== 200) {
+            res
+                .status(response.status)
+                .json(response.message); // returns just the specific review
+        } else {
+            user.funds = (user.funds + totalCost);
+            user.save(function(err, fundsUpdated) {
+                if (err) {
+                    res
+                    .status(500)
+                    .json(err);
+                } else {
+                    res
+                    .status(204)
+                    .json();
+                }
+            });
+        }
+    });
+};
