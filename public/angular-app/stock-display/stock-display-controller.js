@@ -135,7 +135,7 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
         };
         console.log('stockInfo for buyStock is, ', stockInfo);
         
-        if (Number.isInteger(stockInfo.amount)) {
+        if (Number.isInteger(stockInfo.amount) && stockInfo.amount > 0) {
             stockDataFactory.userDisplay(vm.loggedInUser).then(function(response) {
                 console.log("userDisplay in buyStock response is", response);
                 vm.funds = response.data.funds;
@@ -165,7 +165,7 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
             
             }); // ends stockDataFactory.userDisplay
         }  else { // ends if (Number.isInteger(stockInfo.amount))
-                alert('You have not entered a whole number. Please try again');
+                alert('You have not entered a positive whole number. Please try again');
             
         }
     };

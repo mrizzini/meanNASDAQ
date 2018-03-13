@@ -23,7 +23,9 @@
         <td>Stock</td>
         <td>Amount of Shares</td>
         <td>Sell Shares</td>
+        <td>Current Price</td>
         <td>Get Current Price</td>
+
     </tr>
     <tr ng-repeat="stocks in vm.stocksOwned track by $index">
     <td>{{stocks.stock}}</td>    
@@ -35,7 +37,7 @@
             <button type="submit" class="btn-primary" id="button[$index]">Sell this stock</button>
         </form>
     </td>
-    <td id="currentPrice">
+    <td id="currentPrice{{$index}}">
     </td>
     <td>
         <button data-ng-click="vm.getCurrentPrice(stocks.stock, $event);" type="submit" class="btn-primary" data-ng-attr-id="{{$index}}">Get Current Price</button>
