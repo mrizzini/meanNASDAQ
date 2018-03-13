@@ -139,6 +139,7 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
                 
                 stockDataFactory.userSellUpdateFunds(vm.loggedInUser, stockInfo).then(function(response) {
                     console.log(response);
+                    $route.reload(); 
                 }).catch(function(error) {
                     console.log(error);
                 }); // ends stockDataFactory.userUpdateFunds
