@@ -7,6 +7,7 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
     var decodedToken = jwtHelper.decodeToken(token); //decodes token 
     var currentPrice;
     var buttonIndex;
+    var current;
     vm.clicked = false;
     vm.loggedInUser = decodedToken.username; // add logged in user property so we can
     stockDataFactory.userDisplay(vm.loggedInUser).then(function(response) {
@@ -29,6 +30,14 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
         		    dataType: 'json',
         		  //  data: { function: 'TIME_SERIES_INTRADAY', symbol: vm.symbol, interval: "1min", datatype: 'json', apikey: stockAPIKEY },
         		    success: function(data) {
+        		        if (data["Error Message"]) {
+        		          console.log("API ERROR");
+        		          console.log(data["Error Message"]);
+        		          current = document.createElement("SPAN");
+                      current.setAttribute("id", "symbolIs" + apiSymbol);
+        				      current.innerHTML = "Error. Please refresh and try again"; 
+        				      document.getElementById("currentPrice" + buttonIndex).appendChild(current);
+        		        } else {
         		        console.log('selling stock getting current price data is, ', data);
         		        var currentDate = data["Meta Data"]["3. Last Refreshed"];
         		        var apiData = data["Time Series (1min)"];
@@ -37,18 +46,31 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
         		        currentPrice = currentPrice.slice(0, -2);
         		        currentPrice = parseFloat(currentPrice);
                     console.log('current price should is ', currentPrice);
-                    var current = document.createElement("SPAN");
+                    current = document.createElement("SPAN");
                     current.setAttribute("id", "symbolIs" + apiSymbol);
         				    current.innerHTML = currentPrice; 
         				    document.getElementById("currentPrice" + buttonIndex).appendChild(current);
         	           }
+        		    }
+        	   //    error:  function (textStatus, errorThrown) {
+            //         console.log("API ERROR IS ", textStatus, errorThrown);
+            //         var current = document.createElement("SPAN");
+            //         current.setAttribute("id", "symbolIs" + apiSymbol);
+        				//     current.innerHTML = "Error. Please refresh and try again"; 
+        				//     document.getElementById("currentPrice" + buttonIndex).appendChild(current);
+                    
+            // }
         	    });
         });
         return buttonIndex;
     };
     
     vm.sellStock = function(stockId, symbol, amount) {
-      console.log(vm.stocksOwned[buttonIndex].amount);
+      console.log('vm.clicked is ', vm.clicked);
+      // console.log(vm.stocksOwned[buttonIndex].amount);
+      if (!vm.clicked) { 
+        alert('Please get current price first before selling back stock');
+      } else {
       if (amount < 1 || amount > vm.stocksOwned[buttonIndex].amount) {
         alert('Please enter a positive number that is less than the amount you own');
       } else {
@@ -86,6 +108,7 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
                 
                 stockDataFactory.userSellUpdateFunds(vm.loggedInUser, stockInfo).then(function(response) {
                     console.log(response);
+                    vm.clicked = false;
                     $route.reload(); 
                 }).catch(function(error) {
                     console.log(error);
@@ -94,6 +117,7 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
           alert("Please enter a whole number");
         }
         }
+      }
     };
     
     
