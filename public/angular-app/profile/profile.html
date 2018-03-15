@@ -28,18 +28,18 @@
 
     </tr>
     <tr ng-repeat="stocks in vm.stocksOwned track by $index">
-    <td>{{stocks.stock}}</td>    
-    <td>{{stocks.amount}}</td>
+    <td ng-show="stocks.amount > 0">{{stocks.stock}}</td>    
+    <td ng-show="stocks.amount > 0">{{stocks.amount}}</td>
     <!--<td>{{vm.stocksOwned}}</td>-->
-    <td>
+    <td ng-show="stocks.amount > 0">
         <form name="vm.sellStockForm" ng-submit="vm.sellStock(stocks._id, stocks.stock, vm.sellAmount[$index], buttonIndex)">
             <input id="amount" type="amount" required placeholder="Amount of shares" ng-model="vm.sellAmount[$index]">
             <button type="submit" class="btn-primary" id="button[$index]">Sell this stock</button>
         </form>
     </td>
-    <td id="currentPrice{{$index}}">
+    <td ng-show="stocks.amount > 0" id="currentPrice{{$index}}">
     </td>
-    <td>
+    <td ng-show="stocks.amount > 0">
         <button data-ng-click="vm.getCurrentPrice(stocks.stock, $event);" type="submit" class="btn-primary" data-ng-attr-id="{{$index}}">Get Current Price</button>
     </td>
     </tr>      

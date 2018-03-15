@@ -25,6 +25,9 @@ body > .container {
     border-color: black;
 }
 
+table, tr {
+    border: 1px solid black;
+}
 
 table {
     font-family: arial, sans-serif;
@@ -33,21 +36,19 @@ table {
 }
 
 .tableHead {
-    font-weight: bold;   
+    font-weight: bold;
+    background-color: #ccdddd;
 }
 
 td, th {
-    border: 1px solid #dddddd;
+    /*border: 1px solid #dddddd;*/
     text-align: left;
     padding: 8px;
 }
 
-tr:nth-child(even) {
+tr {
     background-color: #dddddd;
 }
-
-
-
 
 
 #easyPaginate {width:300px;}
