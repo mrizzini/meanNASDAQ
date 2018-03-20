@@ -85,7 +85,6 @@ module.exports.stocksGetOne = function(req, res) {
     });
 };
 
-
 module.exports.stocksSearchOne = function (req, res) {
     console.log('GET STOCK BY SYMBOL');
     // var symbol = req.params.Symbol;
@@ -109,10 +108,7 @@ module.exports.stocksSearchOne = function (req, res) {
       }
     }
     );
-
 };
-
-
 
 var _addFavorite = function(req, res, stock) {
     User.favorites.push({
@@ -132,9 +128,6 @@ var _addFavorite = function(req, res, stock) {
         }
     });
 };
-
-
-
 
 module.exports.stocksAddFavorite = function (req, res) {
   var userId = req.params.userId;

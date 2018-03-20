@@ -36,13 +36,13 @@ router
 router
     .route('/users/login')
     .post(ctrlUsers.login);
-    
+
+// User routes
 router
     .route('/users/:user') // api/users
     .get(ctrlUsers.usersGetOne) // this maps the controller to the route
     .delete(ctrlUsers.deleteUser);
-    // .post(ctrlUsers.authenticate, ctrlStocks.stocksAddFavorite);
-
+    
 router
     .route('/users/:user/searches')
     .post(ctrlUsers.usersAddSearch);
@@ -60,14 +60,11 @@ router
 router
     .route('/users/:user/sellStock')
     .put(ctrlUsers.usersSellStock);
-    // .put(ctrlUsers.userSellUpdateFunds);
-    
+
 router
     .route('/users/:user/sellStock/updateFunds')
-    // .put(ctrlUsers.usersSellStock)
     .put(ctrlUsers.userSellUpdateFunds);
 
-    
 
  module.exports = router; //exports router to other files
 

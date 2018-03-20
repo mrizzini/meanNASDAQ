@@ -32,7 +32,6 @@ function stockDataFactory($http) {
     
     function searchStock(Symbol) {
         return $http.get('/api/stocks/search/' + Symbol).then(complete).catch(failed);
-        // return $http.post('/api/users/user/' + user + '/searches/' + Symbol).then(complete).catch(failed);
     }
     
     function userDisplay(user) {

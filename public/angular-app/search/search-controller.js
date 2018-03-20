@@ -72,8 +72,6 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
     vm.isSubmitted = true;
     }; // Ends vm.search()
 
-
-
     $(document).ready(function() {
         $.ajax({
     		    method: "GET",
@@ -106,7 +104,6 @@ function SearchController(stockDataFactory, $route, $window, AuthFactory, jwtHel
     		        }
     	    });
     });
-
 
     $(document).ready(function() {
                 $.ajax({

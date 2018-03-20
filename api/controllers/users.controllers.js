@@ -54,7 +54,6 @@ module.exports.login = function(req, res) {
     });
 };
     
-    
 var _addUserSearch = function(req, res, user) {
     console.log('req body is', req.body);
     console.log('user test', req.body.symbol);
@@ -74,7 +73,6 @@ var _addUserSearch = function(req, res, user) {
         }
     });
 };
-    
     
 module.exports.usersAddSearch = function(req, res) {
     console.log("UsersAddSearch req params is", req.params.user);
@@ -109,7 +107,6 @@ module.exports.usersAddSearch = function(req, res) {
     
 };
 
-
 module.exports.authenticate = function(req, res, next) { // create authentication function. next is a middleware. function that has access to req & res and can make changes and end cycle
     var headerExists = req.headers.authorization; // checks if req object has an authorization header
     if (headerExists) { // if it exists,
@@ -127,7 +124,6 @@ module.exports.authenticate = function(req, res, next) { // create authenticatio
         res.status(403).json('No token provided'); // if there is no headerExist
     }
 }; // jwt.io to validate tokesn
-
 
 module.exports.usersGetOne = function (req, res) {
     var username = req.params.user;
@@ -165,7 +161,6 @@ module.exports.usersGetOne = function (req, res) {
     });
 };
 
-
 var _addUserFavorite = function(req, res, user) {
     console.log('req body is', req.body);
     user.userFavorites.push({
@@ -184,7 +179,6 @@ var _addUserFavorite = function(req, res, user) {
         }
     });
 };
-
 
 module.exports.usersAddFavorite = function(req, res) {
     var username = req.params.user;
@@ -220,7 +214,6 @@ module.exports.usersAddFavorite = function(req, res) {
     });
     
 };
-
 
 module.exports.deleteUser = function(req, res) {
     var user = req.params.user;
@@ -261,7 +254,6 @@ var _addUserStock = function(req, res, user) {
         }
     });
 };
-
 
 module.exports.usersBuyStock = function(req, res) {
     console.log('module.exports.usersBuyStock function hit');  

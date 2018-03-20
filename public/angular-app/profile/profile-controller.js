@@ -52,14 +52,6 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
         				    document.getElementById("currentPrice" + buttonIndex).appendChild(current);
         	           }
         		    }
-        	   //    error:  function (textStatus, errorThrown) {
-            //         console.log("API ERROR IS ", textStatus, errorThrown);
-            //         var current = document.createElement("SPAN");
-            //         current.setAttribute("id", "symbolIs" + apiSymbol);
-        				//     current.innerHTML = "Error. Please refresh and try again"; 
-        				//     document.getElementById("currentPrice" + buttonIndex).appendChild(current);
-                    
-            // }
         	    });
         });
         return buttonIndex;
@@ -136,7 +128,7 @@ function ProfileController($route, $routeParams, $window, $location, stockDataFa
       }
     };
     
-}
+} //ends Profile Controller
 
 
 

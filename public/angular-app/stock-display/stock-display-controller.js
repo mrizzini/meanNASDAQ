@@ -169,7 +169,5 @@ function StockController($route, $routeParams, $window, stockDataFactory, AuthFa
             
         }
     };
-    
-    
-    
+
 } // ends Stock Controller
